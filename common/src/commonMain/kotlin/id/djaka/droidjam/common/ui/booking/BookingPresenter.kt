@@ -54,7 +54,7 @@ class BookingPresenter(
                             if (couponState.isValidationFailed) {
                                 submitResult = UIState.SubmitResult.RequireUserActionDialog(
                                     "Invalid Coupon",
-                                    "Your coupon is invalid, do you want to continue the booking?",
+                                    "Your coupon is invalid, do you want to clear and continue the booking?",
                                     "YES"
                                 )
                                 return@launch

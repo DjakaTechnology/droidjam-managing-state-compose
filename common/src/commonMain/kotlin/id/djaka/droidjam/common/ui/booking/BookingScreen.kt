@@ -29,30 +29,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun foo(): Int {
-    var counter by remember { mutableStateOf(0) }
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(500)
-            counter++
-            println("Foo: $counter")
-        }
-    }
-    return counter
-}
-
-@Composable
-fun bar() {
-    val foo = foo()
-    LaunchedEffect(foo) {
-        while (true) {
-            delay(500)
-            println("Bar: $foo")
-        }
-    }
-}
-
-@Composable
 fun BookingScreen() {
     CoreTheme {
         val presenter = remember { createPresenter() }
@@ -61,8 +37,6 @@ fun BookingScreen() {
 
         BookingScreen(state) { coroutineScope.launch { event.emit(it) } }
     }
-
-    bar()
 }
 
 fun createPresenter(): BookingPresenter {

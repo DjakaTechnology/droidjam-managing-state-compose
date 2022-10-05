@@ -1,0 +1,5 @@
+insert:
+INSERT INTO RecentCountryCodeDelight(region, time) VALUES (?, ?);
+
+get_distinct:
+SELECT * FROM RecentCountryCodeDelight ORDER BY time DESC LIMIT :limit;

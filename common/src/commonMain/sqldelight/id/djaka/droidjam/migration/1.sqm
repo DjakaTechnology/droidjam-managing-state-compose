@@ -1,0 +1,10 @@
+CREATE TABLE SendHistoryDelight(
+  phoneNumber TEXT,
+  date INTEGER,
+  message TEXT
+);
+
+CREATE TABLE RecentCountryCodeDelight(
+    region TEXT,
+    time INTEGER
+);

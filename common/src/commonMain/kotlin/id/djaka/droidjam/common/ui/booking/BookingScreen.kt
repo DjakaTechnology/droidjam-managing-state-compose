@@ -21,6 +21,7 @@ import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoWidget
 import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponWidget
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDown
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDownPresenter
+import id.djaka.droidjam.common.ui.dialog.CoreDialog
 import id.djaka.droidjam.common.ui.theme.CoreTheme
 import id.djaka.droidjam.common.ui.theme.SpacerVertical
 import id.djaka.droidjam.common.ui.theme.SpacingM
@@ -121,11 +122,8 @@ private fun UserActionDialog(
     action: (BookingPresenter.Event) -> Unit,
     state: BookingPresenter.UIState.SubmitResult.RequireUserActionDialog
 ) {
-    Dialog(
-        onCloseRequest = { action(BookingPresenter.Event.DismissRequireUserActionDialog) },
-        undecorated = true,
-        resizable = false,
-        transparent = true
+    CoreDialog(
+        onDismissRequest = { action(BookingPresenter.Event.DismissRequireUserActionDialog) },
     ) {
         Card(Modifier.padding(horizontal = SpacingM).fillMaxWidth()) {
             Column(Modifier.padding(SpacingM)) {
@@ -145,11 +143,8 @@ private fun UserActionDialog(
 
 @Composable
 private fun SubmittingDialog() {
-    Dialog(
-        onCloseRequest = { },
-        undecorated = true,
-        resizable = false,
-        transparent = true
+    CoreDialog(
+        onDismissRequest = { },
     ) {
         Card(Modifier.padding(horizontal = SpacingM).fillMaxWidth()) {
             Column(Modifier.padding(SpacingM)) {
@@ -165,11 +160,8 @@ private fun SubmittingDialog() {
 private fun SubmitSuccessDialog(
     action: (BookingPresenter.Event) -> Unit,
 ) {
-    Dialog(
-        onCloseRequest = { action(BookingPresenter.Event.DismissSuccessDialog) },
-        undecorated = true,
-        resizable = false,
-        transparent = true
+    CoreDialog(
+        onDismissRequest = { action(BookingPresenter.Event.DismissSuccessDialog) },
     ) {
         Card(Modifier.padding(horizontal = SpacingM).fillMaxWidth()) {
             Column(Modifier.padding(SpacingM)) {

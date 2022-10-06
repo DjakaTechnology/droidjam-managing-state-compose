@@ -41,11 +41,11 @@ class CouponPresenter constructor(
     }
 
     private suspend fun fetchCouponValidation(coupon: String): UIState.ValidationResult {
-        val coupon = applyCouponUseCase(coupon)
-        return if (coupon.isSuccess && coupon.couponModel != null) {
-            UIState.ValidationResult.Success("You got ${coupon.couponModel.discountMessage} discount!")
+        val couponResult = applyCouponUseCase(coupon)
+        return if (couponResult.isSuccess && couponResult.couponModel != null) {
+            UIState.ValidationResult.Success("You got ${couponResult.couponModel.discountMessage} discount!")
         } else {
-            UIState.ValidationResult.Invalid(coupon.message)
+            UIState.ValidationResult.Invalid(couponResult.message)
         }
     }
 

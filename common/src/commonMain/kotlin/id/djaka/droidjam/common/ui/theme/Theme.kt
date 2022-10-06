@@ -98,21 +98,7 @@ fun CoreTheme(
 
     MaterialTheme(
         colorScheme = colors,
-//        typography = AppTypography,
         content = {
-//            if (adjustStatusBarColor) {
-//                val systemUiController = rememberSystemUiController()
-//                val surface1Color = MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
-//                DisposableEffect(systemUiController, useDarkTheme, useDynamicColor) {
-//                    systemUiController.setSystemBarsColor(
-//                        color = surface1Color
-//                    )
-//                    systemUiController.setNavigationBarColor(
-//                        color = surface1Color
-//                    )
-//                    onDispose {}
-//                }
-//            }
 
             content()
         }

@@ -57,6 +57,8 @@ kotlin {
                 implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightAndroidDriver)
                 implementation(Libraries.ktorClientCIO)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.material3)
             }
         }
         val androidTest by getting {

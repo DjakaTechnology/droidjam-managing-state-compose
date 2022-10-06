@@ -16,7 +16,7 @@ class GetSearchCountryPickerInitialStateUseCase(
     operator fun invoke(): Flow<List<CountryPickerItem>> {
         print("Country Picker generated flow")
         return countryCodeRepository.getRecentCountryCode().map { it ->
-            delay(2000) // SIMULATE API CALL
+            delay(500) // SIMULATE API CALL
 
             val result = mutableListOf<CountryPickerItem>()
             val defaultCountryCode = countryPickerConverter.convert(countryCodeRepository.getDefaultCountryCode())

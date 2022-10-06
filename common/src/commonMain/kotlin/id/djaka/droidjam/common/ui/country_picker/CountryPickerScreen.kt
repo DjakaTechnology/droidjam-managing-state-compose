@@ -34,66 +34,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun CountryPickerScreen() {
-//    CountryPickerScreenComposable()
-//    CountryPickerScreenMolecule()
-    CountryPickerScreenFlow()
-}
-
-@Composable
-fun CountryPickerScreenComposable() {
-    val presenter = remember { createPresenter() }
-//    val (event, state) = presenter.rememberLaunchPresenter()
-    val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
-    val state = presenter.present(event)
-
-    val coroutineScope = rememberCoroutineScope()
-    Surface {
-        CountryPickerScreen(state) { coroutineScope.launch { event.emit(it) } }
-    }
-}
-
-@Composable
-fun CountryPickerScreenMolecule() {
-    val presenter = remember { createPresenter() }
-    val (event, stateFlow) = presenter.rememberLaunchMoleculePresenter()
-    val state = stateFlow.collectAsState().value
-
-    val coroutineScope = rememberCoroutineScope()
-    Surface {
-        CountryPickerScreen(state) { coroutineScope.launch { event.emit(it) } }
-    }
-}
-
-@Composable
-fun CountryPickerScreenFlow() {
-    val coroutineScope = rememberCoroutineScope()
-    val presenter = remember { createFlowPresenter() }
-    val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
-    val state by remember { presenter.presentFlow(coroutineScope, event) }.collectAsState()
-    Surface {
-        CountryPickerScreen(state) { coroutineScope.launch { event.emit(it) } }
-    }
-}
-
-
-private fun createPresenter(): CountryPickerPresenter {
-    val dependency = CoreDIManager.subComponent()
-    return CountryPickerPresenter(
-        searchCountryUseCases = dependency.searchCountryUseCase,
-        saveRecentCountryUseCase = dependency.saveRecentCountryUseCase
-    )
-}
-
-private fun createFlowPresenter(): CountryPickerFlowPresenter {
-    val dependency = CoreDIManager.subComponent()
-    return CountryPickerFlowPresenter(
-        searchCountryUseCases = dependency.searchCountryUseCase,
-        saveRecentCountryUseCase = dependency.saveRecentCountryUseCase
-    )
-}
-
-@Composable
 fun CountryPickerScreen(
     state: CountryPickerPresenter.UIState,
     event: (CountryPickerPresenter.Event) -> Unit = {},

@@ -27,7 +27,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
-                implementation(project(":shared:locale:locale-ui"))
+                implementation(project(":shared:locale:locale-app"))
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)

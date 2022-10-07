@@ -11,12 +11,6 @@ import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponPresenter
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDownPresenter
 import id.djaka.droidjam.shared.core.di.CoreComponent
 import id.djaka.droidjam.shared.core.di.CoreDIManager
-import id.djaka.droidjam.shared.locale.app.domain.CountryCodeRepository
-import id.djaka.droidjam.shared.locale.app.domain.CountryPickerConverter
-import id.djaka.droidjam.shared.locale.app.domain.GetSearchCountryPickerInitialStateUseCase
-import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
-import id.djaka.droidjam.shared.locale.app.domain.SearchCountryCodeFilterUseCase
-import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
 
 object AppDIManager {
     val appComponent = CoreDIManager.appComponent

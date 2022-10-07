@@ -8,5 +8,7 @@ import id.djaka.droidjam.common.App
 @Preview
 @Composable
 fun AppPreview() {
-    App()
+    App {
+
+    }
 }

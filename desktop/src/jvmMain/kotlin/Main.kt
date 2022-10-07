@@ -7,8 +7,8 @@ import id.djaka.droidjam.shared.core_ui.theme.CoreTheme
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
-        CoreTheme {
-            App()
+        App {
+
         }
     }
 }

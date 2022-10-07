@@ -74,9 +74,11 @@ fun CountryPickerScreen(
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
         )
-        if (state.selectedCountryDisplay != null) {
-            Text(state.selectedCountryDisplay)
+
+        state.selectedCountryDisplay?.let {
+            Text(it)
         }
+
         Spacer(modifier = Modifier.size(12.dp))
 
         OutlinedTextField(

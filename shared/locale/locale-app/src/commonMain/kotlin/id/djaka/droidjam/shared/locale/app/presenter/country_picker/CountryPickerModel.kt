@@ -12,6 +12,7 @@ data class CountryPickerModel(
 ) {
 
     val selectedCountryDisplay = if (selectedCountry != null) "Selected ${selectedCountry.name}." else null
+
     @Immutable
     sealed class CountryListState {
         object Loading : CountryListState()

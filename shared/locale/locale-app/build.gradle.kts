@@ -2,15 +2,28 @@ import org.jetbrains.compose.compose
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     id(BuildPlugins.serialization)
     id(BuildPlugins.kotlinParcelize)
     id(BuildPlugins.molecule)
-    id(BuildPlugins.jetbrainCompose)
 }
 
 kotlin {
     android()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "14.1"
+        framework {
+            baseName = "local-app"
+        }
+    }
 
     jvm("desktop") {
         compilations.all {
@@ -22,19 +35,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
-                implementation(project(":shared:core-ui"))
-                implementation(project(":shared:locale:locale-app"))
                 implementation(compose.runtime)
-                implementation(compose.foundation)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.material3)
                 implementation(Libraries.serialization)
                 implementation(Libraries.settings)
                 implementation(Libraries.settingsNoArgs)
                 implementation(Libraries.settingsCoroutines)
                 implementation(Libraries.sqlDelightCoroutines)
-                implementation(Libraries.kamelImage)
-                implementation(Libraries.ktorClientCore)
                 implementation(Libraries.coroutinesCore)
             }
         }
@@ -46,9 +52,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Libraries.sqlDelightAndroidDriver)
-                implementation(Libraries.ktorClientCIO)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.material3)
             }
         }
         val androidTest by getting
@@ -57,14 +60,13 @@ kotlin {
                 implementation(compose.preview)
                 implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightJvmDriver)
-                implementation(Libraries.ktorClientCIO)
             }
         }
     }
 }
 
 android {
-    namespace = "id.djaka.droidjam.locale"
+    namespace = "id.djaka.shared.local_app"
     compileSdk = DroidJam.compileSdk
     defaultConfig {
         minSdk = DroidJam.minSdk

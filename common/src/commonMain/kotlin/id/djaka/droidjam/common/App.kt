@@ -12,8 +12,8 @@ import io.kamel.image.config.LocalKamelConfig
 fun App() {
     CompositionLocalProvider(LocalKamelConfig provides provideKamelConfig()) {
         Surface {
-//            CountryPickerScreen()
-            BookingScreen()
+            CountryPickerScreen()
+//            BookingScreen()
         }
     }
 }

@@ -23,15 +23,17 @@ class CountryPickerPresenter(
         var selectedCountry by remember { mutableStateOf<CountryCodeModel?>(null) }
         val countryListState = presentCountryListState(searchBox)
 
-        CollectEffect(event) {
-            when (it) {
-                is Event.ItemClicked -> {
-                    selectedCountry = it.item
-                    saveRecentCountryUseCase(it.item.code)
-                    searchBox = ""
-                }
+        LaunchedEffect(countryListState) {
+            event.collect {
+                when (it) {
+                    is Event.ItemClicked -> {
+                        selectedCountry = it.item
+                        saveRecentCountryUseCase(it.item.code)
+                        searchBox = ""
+                    }
 
-                is Event.SearchBoxChanged -> searchBox = it.query
+                    is Event.SearchBoxChanged -> searchBox = it.query
+                }
             }
         }
 

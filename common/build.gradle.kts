@@ -79,6 +79,14 @@ kotlin {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("..\\droidjam.jks")
+            storePassword = "droidjam"
+            keyAlias = "droidjam"
+            keyPassword = "droidjam"
+        }
+    }
     compileSdk = (DroidJam.compileSdk)
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")

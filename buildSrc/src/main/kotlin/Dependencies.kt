@@ -23,7 +23,7 @@ object Versions {
     // Serialization
     const val serialization = "1.4.0"
 
-    const val sqlDelight = "1.5.3"
+    const val sqlDelight = "1.5.4"
 
     const val settings = "1.0.0-alpha01"
     const val kamelImage = "0.4.1"

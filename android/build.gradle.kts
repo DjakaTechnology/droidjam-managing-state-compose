@@ -26,6 +26,14 @@ dependencies {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("..\\droidjam.jks")
+            storePassword = "droidjam"
+            keyAlias = "droidjam"
+            keyPassword = "droidjam"
+        }
+    }
     compileSdk = DroidJam.compileSdk
     defaultConfig {
         applicationId = DroidJam.applicationId
@@ -42,6 +50,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

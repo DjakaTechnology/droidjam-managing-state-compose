@@ -8,22 +8,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import id.djaka.droidjam.common.di.CoreDIManager
 import id.djaka.droidjam.common.framework.rememberLaunchMoleculePresenter
+import id.djaka.droidjam.common.framework.rememberLaunchPresenter
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 @Composable
 fun CountryPickerScreen() {
-//    CountryPickerScreenComposable()
+    CountryPickerScreenComposable()
 //    CountryPickerScreenMolecule()
-    CountryPickerScreenFlow()
+//    CountryPickerScreenFlow()
 }
 
 @Composable
 fun CountryPickerScreenComposable() {
     val presenter = remember { createPresenter() }
-//    val (event, state) = presenter.rememberLaunchPresenter()
-    val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
-    val state = presenter.present(event)
+    val (event, state) = presenter.rememberLaunchPresenter()
 
     val coroutineScope = rememberCoroutineScope()
     Surface {

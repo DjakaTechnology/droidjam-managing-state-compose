@@ -113,8 +113,5 @@ class CountryPickerRxPresenter(
 fun SearchCountryCodeFilterUseCase.invokeRx(query: String): Observable<List<CountryPickerItem.Picker>> =
     Observable.just(query)
         .flatMapSingle {
-            rxSingle {
-                delay(2000) // Simulate Api call
-                invoke(it)
-            }
+            rxSingle { invoke(it) }
         }

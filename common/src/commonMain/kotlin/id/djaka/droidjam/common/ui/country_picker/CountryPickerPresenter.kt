@@ -68,7 +68,6 @@ class CountryPickerPresenter(
     }
 
     private suspend fun filterCountry(query: String): UIState.CountryListState {
-        delay(2000) // Simulate Api CALL
         val filterResult = searchCountryUseCases.searchCountryCodeFilter(query)
         return if (filterResult.isEmpty()) {
             UIState.CountryListState.Empty("Sorry, we can't found country with \"$query\"")

@@ -1,7 +1,6 @@
 package id.djaka.droidjam.common.framework
 
 import id.djaka.droidjam.common.model.CountryCodeModel
-import id.djaka.droidjam.common.ui.country_picker.item.CountryNumberModel
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
 
 object CoreObjectMocker {

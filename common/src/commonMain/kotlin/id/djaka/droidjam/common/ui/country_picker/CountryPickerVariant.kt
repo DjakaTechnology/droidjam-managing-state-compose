@@ -61,7 +61,7 @@ fun CountryPickerScreenFlowLikeRx() {
     val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
     val state by remember { presenter.presentFlow(coroutineScope, event) }.collectAsState()
     Surface {
-        CountryPickerScreen(state) { coroutineScope.launch { event.emit(it) } }
+        CountryPickerScreen(state.toGenericUIState()) { coroutineScope.launch { event.emit(it) } }
     }
 }
 

@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.*
 class CountryPickerPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-) : Presenter<CountryPickerEvent, CountryPickerPresenter.Model> {
+) : Presenter<CountryPickerEvent, CountryPickerModel> {
 
     private val initialStateFlow = searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
 
     @Composable
-    override fun present(event: Flow<CountryPickerEvent>): Model {
+    override fun present(event: Flow<CountryPickerEvent>): CountryPickerModel {
         var searchBox by remember { mutableStateOf("") }
         var selectedCountry by remember { mutableStateOf<CountryCodeModel?>(null) }
         val countryListState = presentCountryListState(searchBox)
@@ -36,7 +36,7 @@ class CountryPickerPresenter(
             }
         }
 
-        return Model(
+        return CountryPickerModel(
             searchBox = searchBox,
             countryListState = countryListState,
             selectedCountry = selectedCountry
@@ -44,19 +44,19 @@ class CountryPickerPresenter(
     }
 
     @Composable
-    private fun presentCountryListState(query: String): Model.CountryListState {
+    private fun presentCountryListState(query: String): CountryPickerModel.CountryListState {
         val initialState by initialStateFlow.collectAsState(listOf())
-        var result: Model.CountryListState by remember { mutableStateOf(Model.CountryListState.Loading) }
+        var result: CountryPickerModel.CountryListState by remember { mutableStateOf(CountryPickerModel.CountryListState.Loading) }
 
         if (query.isEmpty()) {
             result = if (initialState.isEmpty()) {
-                Model.CountryListState.Loading
+                CountryPickerModel.CountryListState.Loading
             } else {
-                Model.CountryListState.Success(initialState)
+                CountryPickerModel.CountryListState.Success(initialState)
             }
         } else {
             LaunchedEffect(query) {
-                result = Model.CountryListState.Loading
+                result = CountryPickerModel.CountryListState.Loading
                 println("Result: Reset Debounce")
                 delay(200)
                 println("Result: Fetching")
@@ -68,36 +68,13 @@ class CountryPickerPresenter(
         return result
     }
 
-    private suspend fun filterCountry(query: String): Model.CountryListState {
+    private suspend fun filterCountry(query: String): CountryPickerModel.CountryListState {
         val filterResult = searchCountryUseCases.searchCountryCodeFilter(query)
         return if (filterResult.isEmpty()) {
-            Model.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
+            CountryPickerModel.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
         } else {
-            Model.CountryListState.Success(filterResult)
+            CountryPickerModel.CountryListState.Success(filterResult)
         }
     }
-
-    @Immutable
-    data class Model(
-        val searchBox: String,
-        val countryListState: CountryListState,
-        val selectedCountry: CountryCodeModel? = null
-    ) {
-
-        val selectedCountryDisplay = if (selectedCountry != null) "Selected ${selectedCountry.name}." else null
-        @Immutable
-        sealed class CountryListState {
-            object Loading : CountryListState()
-            data class Success(val countryCodes: List<CountryPickerItem>) : CountryListState()
-            data class Empty(val message: String) : CountryListState()
-        }
-
-        companion object {
-            fun empty() = Model(
-                searchBox = "",
-                countryListState = CountryListState.Loading,
-                selectedCountry = null,
-            )
-        }
-    }
+    
 }

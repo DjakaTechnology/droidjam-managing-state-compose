@@ -4,7 +4,7 @@ import id.djaka.droidjam.common.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.common.domain.SearchCountryUseCases
 import id.djaka.droidjam.common.model.CountryCodeModel
 import id.djaka.droidjam.common.ui.country_picker.CountryPickerEvent
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.Model
+import id.djaka.droidjam.common.ui.country_picker.CountryPickerModel
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -16,7 +16,7 @@ class CountryPickerFlowPresenter(
     fun presentFlow(
         coroutineScope: CoroutineScope,
         event: Flow<CountryPickerEvent>,
-    ): StateFlow<Model> {
+    ): StateFlow<CountryPickerModel> {
         val query = MutableStateFlow("")
         val selectedCountry = MutableStateFlow<CountryCodeModel?>(null)
 
@@ -44,22 +44,22 @@ class CountryPickerFlowPresenter(
     ) = combine(
         queryFlow,
         selectedCountryFlow,
-        presentCountryListStateFlow(queryFlow).onStart { emit(Model.CountryListState.Loading) }
+        presentCountryListStateFlow(queryFlow).onStart { emit(CountryPickerModel.CountryListState.Loading) }
     ) { query, selectedCountry, countryStateFlow ->
-        Model(
+        CountryPickerModel(
             searchBox = query,
             countryListState = countryStateFlow,
             selectedCountry = selectedCountry
         )
     }.stateIn(
         coroutineScope, SharingStarted.WhileSubscribed(5000),
-        Model.empty()
+        CountryPickerModel.empty()
     )
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     private fun presentCountryListStateFlow(
         queryFlow: StateFlow<String>
-    ): Flow<Model.CountryListState> =
+    ): Flow<CountryPickerModel.CountryListState> =
         combine(
             queryFlow.debounce(200),
             searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
@@ -74,26 +74,26 @@ class CountryPickerFlowPresenter(
         }
 
     private fun composeFilterResultState(query: String) = flow {
-        emit(Model.CountryListState.Loading)
+        emit(CountryPickerModel.CountryListState.Loading)
         println("Result: Fetching")
         emit(filterCountry(query))
         println("Result: updated")
     }.conflate()
 
-    private fun composeInitialState(initialState: List<CountryPickerItem>): Flow<Model.CountryListState> = flow {
+    private fun composeInitialState(initialState: List<CountryPickerItem>): Flow<CountryPickerModel.CountryListState> = flow {
         if (initialState.isEmpty()) {
-            emit(Model.CountryListState.Loading)
+            emit(CountryPickerModel.CountryListState.Loading)
         } else {
-            emit(Model.CountryListState.Success(initialState))
+            emit(CountryPickerModel.CountryListState.Success(initialState))
         }
     }
 
-    private suspend fun filterCountry(query: String): Model.CountryListState {
+    private suspend fun filterCountry(query: String): CountryPickerModel.CountryListState {
         val filterResult = searchCountryUseCases.searchCountryCodeFilter(query)
         return if (filterResult.isEmpty()) {
-            Model.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
+            CountryPickerModel.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
         } else {
-            Model.CountryListState.Success(filterResult)
+            CountryPickerModel.CountryListState.Success(filterResult)
         }
     }
 }

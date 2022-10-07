@@ -31,7 +31,7 @@ import io.ktor.http.*
 
 @Composable
 fun CountryPickerScreen(
-    state: CountryPickerPresenter.Model,
+    state: CountryPickerModel,
     event: (CountryPickerEvent) -> Unit = {},
 ) {
     val itemState = state.countryListState
@@ -78,19 +78,19 @@ fun CountryPickerScreen(
         )
 
         when (itemState) {
-            CountryPickerPresenter.Model.CountryListState.Loading -> {
+            CountryPickerModel.CountryListState.Loading -> {
                 Box(Modifier.fillMaxWidth().padding(SpacingM), contentAlignment = Alignment.Center) {
                     LinearProgressIndicator(Modifier.fillMaxWidth())
                 }
             }
 
-            is CountryPickerPresenter.Model.CountryListState.Empty -> {
+            is CountryPickerModel.CountryListState.Empty -> {
                 Box(Modifier.fillMaxWidth().padding(SpacingM)) {
                     Text(itemState.message)
                 }
             }
 
-            is CountryPickerPresenter.Model.CountryListState.Success -> {
+            is CountryPickerModel.CountryListState.Success -> {
                 CountryCodeList(itemState.countryCodes, keyboard, event)
             }
         }

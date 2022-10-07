@@ -2,7 +2,7 @@ package id.djaka.droidjam.common.ui.country_picker.variant
 
 import androidx.compose.runtime.Immutable
 import id.djaka.droidjam.common.model.CountryCodeModel
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter
+import id.djaka.droidjam.common.ui.country_picker.CountryPickerModel
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
 
 @Immutable
@@ -29,14 +29,14 @@ data class CountryPickerRxModel(
     }
 }
 
-fun CountryPickerRxModel.toGenericModel() = CountryPickerPresenter.Model(
+fun CountryPickerRxModel.toGenericModel() = CountryPickerModel(
     searchBox = searchBox,
     countryListState = countryListState.toGenericModel(),
     selectedCountry = selectedCountry
 )
 
 fun CountryPickerRxModel.CountryListState.toGenericModel() = when (this) {
-    is CountryPickerRxModel.CountryListState.Empty -> CountryPickerPresenter.Model.CountryListState.Empty(message)
-    CountryPickerRxModel.CountryListState.Loading -> CountryPickerPresenter.Model.CountryListState.Loading
-    is CountryPickerRxModel.CountryListState.Success -> CountryPickerPresenter.Model.CountryListState.Success(countryCodes)
+    is CountryPickerRxModel.CountryListState.Empty -> CountryPickerModel.CountryListState.Empty(message)
+    CountryPickerRxModel.CountryListState.Loading -> CountryPickerModel.CountryListState.Loading
+    is CountryPickerRxModel.CountryListState.Success -> CountryPickerModel.CountryListState.Success(countryCodes)
 }

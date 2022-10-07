@@ -9,6 +9,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import id.djaka.droidjam.common.di.CoreDIManager
 import id.djaka.droidjam.common.framework.rememberLaunchMoleculePresenter
 import id.djaka.droidjam.common.framework.rememberLaunchPresenter
+import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerFlowLikeRxPresenter
+import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerFlowPresenter
+import id.djaka.droidjam.common.ui.country_picker.variant.toGenericModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -46,7 +49,7 @@ fun CountryPickerScreenMolecule() {
 fun CountryPickerScreenFlow() {
     val coroutineScope = rememberCoroutineScope()
     val presenter = remember { createFlowPresenter() }
-    val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
+    val event = remember { MutableSharedFlow<CountryPickerEvent>() }
     val state by remember { presenter.presentFlow(coroutineScope, event) }.collectAsState()
     Surface {
         CountryPickerScreen(state) { coroutineScope.launch { event.emit(it) } }
@@ -57,10 +60,10 @@ fun CountryPickerScreenFlow() {
 fun CountryPickerScreenFlowLikeRx() {
     val coroutineScope = rememberCoroutineScope()
     val presenter = remember { createFlowLikeRx() }
-    val event = remember { MutableSharedFlow<CountryPickerPresenter.Event>() }
+    val event = remember { MutableSharedFlow<CountryPickerEvent>() }
     val state by remember { presenter.presentFlow(coroutineScope, event) }.collectAsState()
     Surface {
-        CountryPickerScreen(state.toGenericUIState()) { coroutineScope.launch { event.emit(it) } }
+        CountryPickerScreen(state.toGenericModel()) { coroutineScope.launch { event.emit(it) } }
     }
 }
 

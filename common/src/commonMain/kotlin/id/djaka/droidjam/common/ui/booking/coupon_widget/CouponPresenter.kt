@@ -2,27 +2,27 @@ package id.djaka.droidjam.common.ui.booking.coupon_widget
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.ApplyCouponUseCase
-import id.djaka.droidjam.common.framework.MoleculePresenter
+import id.djaka.droidjam.common.framework.Presenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 
 class CouponPresenter constructor(
     private val applyCouponUseCase: ApplyCouponUseCase,
-) : MoleculePresenter<CouponPresenter.Event, CouponPresenter.UIState> {
+) : Presenter<CouponPresenter.Event, CouponPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): UIState {
+    override fun present(event: Flow<Event>): Model {
         var coupon by remember { mutableStateOf("") }
-        var couponValidation: UIState.ValidationResult by remember { mutableStateOf(UIState.ValidationResult.Idle) }
+        var couponValidation: Model.ValidationResult by remember { mutableStateOf(Model.ValidationResult.Idle) }
 
         if (coupon.isNotEmpty()) {
             LaunchedEffect(coupon) {
-                couponValidation = UIState.ValidationResult.Loading
+                couponValidation = Model.ValidationResult.Loading
                 delay(200) // Debounce
                 couponValidation = fetchCouponValidation(coupon)
             }
         } else {
-            couponValidation = UIState.ValidationResult.Idle
+            couponValidation = Model.ValidationResult.Idle
         }
 
         LaunchedEffect(Unit) {
@@ -34,18 +34,18 @@ class CouponPresenter constructor(
             }
         }
 
-        return UIState(
+        return Model(
             coupon = coupon,
             couponValidation = couponValidation
         )
     }
 
-    private suspend fun fetchCouponValidation(coupon: String): UIState.ValidationResult {
+    private suspend fun fetchCouponValidation(coupon: String): Model.ValidationResult {
         val couponResult = applyCouponUseCase(coupon)
         return if (couponResult.isSuccess && couponResult.couponModel != null) {
-            UIState.ValidationResult.Success("You got ${couponResult.couponModel.discountMessage} discount!")
+            Model.ValidationResult.Success("You got ${couponResult.couponModel.discountMessage} discount!")
         } else {
-            UIState.ValidationResult.Invalid(couponResult.message)
+            Model.ValidationResult.Invalid(couponResult.message)
         }
     }
 
@@ -55,7 +55,7 @@ class CouponPresenter constructor(
     }
 
     @Immutable
-    class UIState(
+    class Model(
         val coupon: String,
         val couponValidation: ValidationResult,
     ) {

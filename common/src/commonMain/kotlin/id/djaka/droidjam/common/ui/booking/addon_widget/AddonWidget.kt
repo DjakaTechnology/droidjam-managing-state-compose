@@ -13,15 +13,15 @@ import id.djaka.droidjam.common.ui.theme.SpacingM
 @Composable
 fun AddonWidget(
     modifier: Modifier = Modifier,
-    state: AddonPresenter.UIState,
+    state: AddonPresenter.Model,
     action: (AddonPresenter.Event) -> Unit
 ) {
     Column(modifier) {
         Text("Addon", style = MaterialTheme.typography.titleMedium)
         SpacerVertical(SpacingM)
         when (state.itemState) {
-            AddonPresenter.UIState.ItemState.Loading -> CircularProgressIndicator()
-            is AddonPresenter.UIState.ItemState.Success -> {
+            AddonPresenter.Model.ItemState.Loading -> CircularProgressIndicator()
+            is AddonPresenter.Model.ItemState.Success -> {
                 AddonList(state.itemState, action)
             }
         }
@@ -29,7 +29,7 @@ fun AddonWidget(
 }
 
 @Composable
-private fun AddonList(itemState: AddonPresenter.UIState.ItemState.Success, action: (AddonPresenter.Event) -> Unit) {
+private fun AddonList(itemState: AddonPresenter.Model.ItemState.Success, action: (AddonPresenter.Event) -> Unit) {
     itemState.items.forEachIndexed { index, item ->
         val toggleCheckbox = { action(AddonPresenter.Event.CheckItem(index, !item.isChecked)) }
         Card(

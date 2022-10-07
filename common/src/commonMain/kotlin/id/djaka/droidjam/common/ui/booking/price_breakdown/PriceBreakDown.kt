@@ -18,7 +18,7 @@ import id.djaka.droidjam.common.ui.theme.*
 @Composable
 fun PriceBreakDown(
     modifier: Modifier = Modifier,
-    state: PriceBreakDownPresenter.UIState,
+    state: PriceBreakDownPresenter.Model,
     action: (PriceBreakDownPresenter.Event) -> Unit
 ) {
     Column(modifier) {
@@ -35,11 +35,11 @@ fun PriceBreakDown(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     when (val it = state.totalPriceState) {
-                        PriceBreakDownPresenter.UIState.TotalPriceState.Loading -> {
+                        PriceBreakDownPresenter.Model.TotalPriceState.Loading -> {
                             CircularProgressIndicator(Modifier.size(14.dp))
                         }
 
-                        is PriceBreakDownPresenter.UIState.TotalPriceState.Success -> {
+                        is PriceBreakDownPresenter.Model.TotalPriceState.Success -> {
                             TotalPriceSummary(
                                 sellingPrice = it.totalPrice.totalSellingPrice,
                                 strikeTroughPrice = it.totalPrice.totalStrikethroughPrice
@@ -63,7 +63,7 @@ fun PriceBreakDown(
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
                 when (val it = state.totalPriceState) {
-                    PriceBreakDownPresenter.UIState.TotalPriceState.Loading -> {
+                    PriceBreakDownPresenter.Model.TotalPriceState.Loading -> {
                         Column {
                             SpacerVertical(SpacingM)
                             LinearProgressIndicator(modifier.fillMaxWidth())
@@ -71,7 +71,7 @@ fun PriceBreakDown(
                         }
                     }
 
-                    is PriceBreakDownPresenter.UIState.TotalPriceState.Success -> {
+                    is PriceBreakDownPresenter.Model.TotalPriceState.Success -> {
                         Column(Modifier.padding(SpacingXS)) {
                             it.totalPrice.items.forEach {
                                 PriceBreakDownItems(Modifier.fillMaxWidth(), it)

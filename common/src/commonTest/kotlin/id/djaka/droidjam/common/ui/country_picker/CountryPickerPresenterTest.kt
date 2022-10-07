@@ -53,7 +53,7 @@ class CountryPickerPresenterTest {
 
         // Then
         val lastState = turbine.expectMostRecentItem()
-        val expectedState = CountryPickerPresenter.UIState.CountryListState.Success(
+        val expectedState = CountryPickerPresenter.Model.CountryListState.Success(
             expectedInitialState
         )
         assertEquals(expectedState, lastState.countryListState)
@@ -100,7 +100,7 @@ class CountryPickerPresenterTest {
 
         // Then
         val lastState = turbine.expectMostRecentItem()
-        val expectedState = CountryPickerPresenter.UIState.CountryListState.Success(
+        val expectedState = CountryPickerPresenter.Model.CountryListState.Success(
             expectedItems
         )
         assertEquals(expectedState, lastState.countryListState)

@@ -2,18 +2,18 @@ package id.djaka.droidjam.common.ui.booking.price_breakdown
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.CalculatePriceBreakDownUseCase
-import id.djaka.droidjam.common.framework.MoleculePresenter
+import id.djaka.droidjam.common.framework.Presenter
 import id.djaka.droidjam.common.model.PriceBreakDownModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class PriceBreakDownPresenter constructor(
     private val calculatePriceBreakDownUseCase: CalculatePriceBreakDownUseCase
-) : MoleculePresenter<PriceBreakDownPresenter.Event, PriceBreakDownPresenter.UIState> {
+) : Presenter<PriceBreakDownPresenter.Event, PriceBreakDownPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): UIState {
+    override fun present(event: Flow<Event>): Model {
         var isExpanded by remember { mutableStateOf(false) }
-        var totalPriceState: UIState.TotalPriceState by remember { mutableStateOf(UIState.TotalPriceState.Loading) }
+        var totalPriceState: Model.TotalPriceState by remember { mutableStateOf(Model.TotalPriceState.Loading) }
         val coroutineScope = rememberCoroutineScope()
 
         LaunchedEffect(Unit) {
@@ -21,8 +21,8 @@ class PriceBreakDownPresenter constructor(
                 when (it) {
                     is Event.ToggleExpandCollapse -> isExpanded = it.isExpanded
                     is Event.UpdateSpec -> coroutineScope.launch {
-                        totalPriceState = UIState.TotalPriceState.Loading
-                        totalPriceState = UIState.TotalPriceState.Success(
+                        totalPriceState = Model.TotalPriceState.Loading
+                        totalPriceState = Model.TotalPriceState.Success(
                             calculatePriceBreakDownUseCase(it.productId, it.couponCode, it.addOnItemId)
                         )
                     }
@@ -30,7 +30,7 @@ class PriceBreakDownPresenter constructor(
             }
         }
 
-        return UIState(
+        return Model(
             isExpanded = isExpanded,
             totalPriceState = totalPriceState
         )
@@ -46,7 +46,7 @@ class PriceBreakDownPresenter constructor(
     }
 
     @Immutable
-    data class UIState(
+    data class Model(
         val isExpanded: Boolean,
         val totalPriceState: TotalPriceState,
     ) {

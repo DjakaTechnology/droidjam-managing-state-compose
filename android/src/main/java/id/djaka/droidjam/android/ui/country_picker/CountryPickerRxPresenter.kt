@@ -3,13 +3,12 @@ package id.djaka.droidjam.android.ui.country_picker
 import id.djaka.droidjam.common.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.common.domain.SearchCountryCodeFilterUseCase
 import id.djaka.droidjam.common.domain.SearchCountryUseCases
-import id.djaka.droidjam.common.model.CountryCodeModel
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.Event
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.UIState
+import id.djaka.droidjam.common.ui.country_picker.CountryPickerEvent
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerRxModel
+import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerRxResult
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.rx3.asObservable
 import kotlinx.coroutines.rx3.rxSingle
 import java.util.concurrent.TimeUnit
@@ -18,68 +17,82 @@ class CountryPickerRxPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
 ) {
-
     fun presentRx(
-        events: Observable<Event>
-    ): Observable<UIState> = Observable.merge(
+        events: Observable<CountryPickerEvent>
+    ): Observable<CountryPickerRxModel> = Observable.merge(
         searchCountryUseCases
             .getSearchCountryCodeInitialStateFlow()
             .asObservable()
-            .map { Result.SearchStateChange(UIState.CountryListState.Success(it)) },
+            .map { CountryPickerRxResult.InitialStateLoad(CountryPickerRxModel.CountryListState.Success(it)) }
+            .startWith(Observable.just(CountryPickerRxResult.InitialStateLoad(CountryPickerRxModel.CountryListState.Loading))),
 
-        events.filter { it is Event.SearchBoxChanged }
-            .map { it as Event.SearchBoxChanged }
-            .map { Result.SearchBoxQueryChange(it.query) },
+        events.filter { it is CountryPickerEvent.SearchBoxChanged }
+            .map { it as CountryPickerEvent.SearchBoxChanged }
+            .switchMap {
+                Observable.merge(
+                    Observable.just(it.query)
+                        .delay(200, TimeUnit.MILLISECONDS)
+                        .filter { it.isNotEmpty() }
+                        .compose(composeCountryListChangeResult()),
+                    Observable.just(CountryPickerRxResult.SearchBoxQueryChange(it.query)),
+                )
+            },
 
-        events.filter { it is Event.SearchBoxChanged }
-            .debounce(200, TimeUnit.MILLISECONDS)
-            .map { (it as Event.SearchBoxChanged).query }
-            .compose(composeCountryListChangeResult()),
-
-        events.filter { it is Event.ItemClicked }
-            .map { it as Event.ItemClicked }
+        events.filter { it is CountryPickerEvent.ItemClicked }
+            .map { it as CountryPickerEvent.ItemClicked }
             .doOnNext { saveRecentCountryUseCase(it.item.code) }
-            .map { Result.SelectCountry(it.item) }
+            .map { CountryPickerRxResult.SelectCountry(it.item) }
 
-    ).scan(UIState.empty()) { state, result ->
+    ).scan(CountryPickerRxModel.empty()) { state, result ->
         when (result) {
-            is Result.SearchBoxQueryChange -> state.copy(searchBox = result.query)
-            is Result.SearchStateChange -> state.copy(countryListState = result.state)
-            is Result.SelectCountry -> state.copy(selectedCountry = result.countryCodeModel)
-            else -> state
+            is CountryPickerRxResult.SelectCountry -> state.copy(selectedCountry = result.countryCodeModel)
+            is CountryPickerRxResult.SearchBoxQueryChange -> {
+                if (result.query.isEmpty()) {
+                    state.copy(searchBox = result.query, countryListState = state.initialList)
+                } else {
+                    state.copy(searchBox = result.query)
+                }
+            }
+
+            is CountryPickerRxResult.SearchStateChange -> {
+                if (state.searchBox.isNotEmpty()) {
+                    state.copy(countryListState = result.state)
+                } else state
+            }
+
+            is CountryPickerRxResult.InitialStateLoad -> {
+                if (state.searchBox.isEmpty()) {
+                    state.copy(
+                        countryListState = result.state,
+                        initialList = result.state
+                    )
+                } else {
+                    state.copy(initialList = result.state)
+                }
+            }
         }
     }
 
-    private fun composeCountryListChangeResult() = ObservableTransformer<String, Result.SearchStateChange> {
-        it.switchMap { query ->
-            if (query.isEmpty()) {
-                searchCountryUseCases.getSearchCountryCodeInitialStateFlow().asObservable()
-                    .startWith(Observable.just(listOf()))
-                    .switchMap { initialState ->
-                        Observable.just(initialState).compose(transformInitialState())
-                    }
-            } else {
-                Observable.just(query).compose(transformFilterCountry())
-            }
-        }.map {
-            Result.SearchStateChange(it)
+    private fun composeCountryListChangeResult() = ObservableTransformer {
+        it.compose(transformFilterCountry()).map {
+            CountryPickerRxResult.SearchStateChange(it)
         }.startWith(
-            Observable.just(Result.SearchStateChange(UIState.CountryListState.Loading))
+            Observable.just(CountryPickerRxResult.SearchStateChange(CountryPickerRxModel.CountryListState.Loading))
         )
     }
 
-    private fun transformInitialState(): ObservableTransformer<List<CountryPickerItem>, UIState.CountryListState> = ObservableTransformer {
+    private fun transformInitialState(): ObservableTransformer<List<CountryPickerItem>, CountryPickerRxModel.CountryListState> = ObservableTransformer {
         it.map {
             if (it.isEmpty()) {
-                UIState.CountryListState.Loading
+                CountryPickerRxModel.CountryListState.Loading
             } else {
-                UIState.CountryListState.Success(it)
+                CountryPickerRxModel.CountryListState.Success(it)
             }
         }
     }
 
-    private fun transformFilterCountry(): ObservableTransformer<String, UIState.CountryListState> = ObservableTransformer { queryObservable ->
-        queryObservable.flatMap {
+    private fun transformFilterCountry(): ObservableTransformer<String, CountryPickerRxModel.CountryListState> = ObservableTransformer { queryObservable ->
+        queryObservable.flatMap { it ->
             Observable.zip(
                 Observable.just(it),
                 searchCountryUseCases.searchCountryCodeFilter.invokeRx(it)
@@ -88,25 +101,11 @@ class CountryPickerRxPresenter(
             }
         }.map { (query, result) ->
             if (result.isEmpty()) {
-                UIState.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
+                CountryPickerRxModel.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
             } else {
-                UIState.CountryListState.Success(result)
+                CountryPickerRxModel.CountryListState.Success(result)
             }
-        }.startWith(Observable.just(UIState.CountryListState.Loading))
-    }
-
-    sealed class Result {
-        class SearchBoxQueryChange(
-            val query: String,
-        ) : Result()
-
-        class SearchStateChange(
-            val state: UIState.CountryListState
-        ) : Result()
-
-        class SelectCountry(
-            val countryCodeModel: CountryCodeModel
-        ) : Result()
+        }.startWith(Observable.just(CountryPickerRxModel.CountryListState.Loading))
     }
 }
 

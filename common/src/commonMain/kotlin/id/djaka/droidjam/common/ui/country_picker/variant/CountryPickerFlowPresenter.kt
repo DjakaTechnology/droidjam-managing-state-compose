@@ -1,10 +1,10 @@
-package id.djaka.droidjam.common.ui.country_picker
+package id.djaka.droidjam.common.ui.country_picker.variant
 
 import id.djaka.droidjam.common.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.common.domain.SearchCountryUseCases
 import id.djaka.droidjam.common.model.CountryCodeModel
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.Event
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.UIState
+import id.djaka.droidjam.common.ui.country_picker.CountryPickerEvent
+import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter.Model
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -15,21 +15,21 @@ class CountryPickerFlowPresenter(
 ) {
     fun presentFlow(
         coroutineScope: CoroutineScope,
-        event: Flow<Event>,
-    ): StateFlow<UIState> {
+        event: Flow<CountryPickerEvent>,
+    ): StateFlow<Model> {
         val query = MutableStateFlow("")
         val selectedCountry = MutableStateFlow<CountryCodeModel?>(null)
 
         coroutineScope.launch {
             event.collect {
                 when (it) {
-                    is Event.ItemClicked -> {
+                    is CountryPickerEvent.ItemClicked -> {
                         selectedCountry.value = it.item
                         saveRecentCountryUseCase(it.item.code)
                         query.value = ""
                     }
 
-                    is Event.SearchBoxChanged -> query.value = it.query
+                    is CountryPickerEvent.SearchBoxChanged -> query.value = it.query
                 }
             }
         }
@@ -44,22 +44,22 @@ class CountryPickerFlowPresenter(
     ) = combine(
         queryFlow,
         selectedCountryFlow,
-        presentCountryListStateFlow(queryFlow).onStart { emit(UIState.CountryListState.Loading) }
+        presentCountryListStateFlow(queryFlow).onStart { emit(Model.CountryListState.Loading) }
     ) { query, selectedCountry, countryStateFlow ->
-        UIState(
+        Model(
             searchBox = query,
             countryListState = countryStateFlow,
             selectedCountry = selectedCountry
         )
     }.stateIn(
         coroutineScope, SharingStarted.WhileSubscribed(5000),
-        UIState.empty()
+        Model.empty()
     )
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     private fun presentCountryListStateFlow(
         queryFlow: StateFlow<String>
-    ): Flow<UIState.CountryListState> =
+    ): Flow<Model.CountryListState> =
         combine(
             queryFlow.debounce(200),
             searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
@@ -74,26 +74,26 @@ class CountryPickerFlowPresenter(
         }
 
     private fun composeFilterResultState(query: String) = flow {
-        emit(UIState.CountryListState.Loading)
+        emit(Model.CountryListState.Loading)
         println("Result: Fetching")
         emit(filterCountry(query))
         println("Result: updated")
     }.conflate()
 
-    private fun composeInitialState(initialState: List<CountryPickerItem>): Flow<UIState.CountryListState> = flow {
+    private fun composeInitialState(initialState: List<CountryPickerItem>): Flow<Model.CountryListState> = flow {
         if (initialState.isEmpty()) {
-            emit(UIState.CountryListState.Loading)
+            emit(Model.CountryListState.Loading)
         } else {
-            emit(UIState.CountryListState.Success(initialState))
+            emit(Model.CountryListState.Success(initialState))
         }
     }
 
-    private suspend fun filterCountry(query: String): UIState.CountryListState {
+    private suspend fun filterCountry(query: String): Model.CountryListState {
         val filterResult = searchCountryUseCases.searchCountryCodeFilter(query)
         return if (filterResult.isEmpty()) {
-            UIState.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
+            Model.CountryListState.Empty("Sorry, we can't found country with \"$query\"")
         } else {
-            UIState.CountryListState.Success(filterResult)
+            Model.CountryListState.Success(filterResult)
         }
     }
 }

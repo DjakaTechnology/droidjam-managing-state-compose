@@ -1,19 +1,24 @@
 package id.djaka.droidjam.common.ui.country_picker_old
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import id.djaka.droidjam.common.model.CountryCodeModel
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 class CountryPickerScreenState {
-    var initialState = listOf<CountryPickerItem>()
+    val initialState = MutableStateFlow(listOf<CountryPickerItem>())
 
-    var query by mutableStateOf("")
+    val query = MutableStateFlow("")
 
-    var filteredCountryCodeList by mutableStateOf(listOf<CountryPickerItem>())
+    val filteredCountryCodeList = MutableStateFlow(listOf<CountryPickerItem>())
 
-    var selectedCountry: CountryCodeModel? by mutableStateOf(null)
+    val selectedCountry = MutableStateFlow<CountryCodeModel?>(null)
 
-    var isLoading: Boolean by mutableStateOf(false)
+    val isLoading = MutableStateFlow(false)
+
+    val selectedCountryDisplay = selectedCountry.map {
+        if (it != null) "Selected " + it.name else null
+    }
 }

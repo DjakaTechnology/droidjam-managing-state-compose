@@ -20,18 +20,18 @@ class CountryPickerPresenter constructor(
 
     private fun initInitialState() {
         coroutineScope.launch {
-            state.isLoading = true
+            state.isLoading.value = true
 
             searchCountryUseCases.getSearchCountryCodeInitialStateFlow().collect {
-                state.initialState = it
+                state.initialState.value = it
 
-                state.isLoading = false // Might cause race condition bug
+                state.isLoading.value = false // Might cause race condition bug
             }
         }
     }
 
     override fun onSearchBoxChanged(query: String) {
-        state.query = query
+        state.query.value = query
 
         loadSearch(query)
     }
@@ -40,22 +40,22 @@ class CountryPickerPresenter constructor(
     private fun loadSearch(query: String) {
         searchJob?.cancel()
         searchJob = coroutineScope.launch {
-            state.isLoading = true
+            state.isLoading.value = true
 
             if (query.isEmpty()) {
-                state.filteredCountryCodeList = state.initialState
+                state.filteredCountryCodeList.value = state.initialState.value
             } else {
                 searchCountryUseCases.searchCountryCodeFilter(query)
             }
 
-            state.isLoading = false
+            state.isLoading.value = false
         }
     }
 
     override fun onItemClicked(item: CountryCodeModel) {
         coroutineScope.launch {
             countryCodeRepository.saveRecentCountryCode(item.code)
-            state.selectedCountry = item
+            state.selectedCountry.value = item
         }
     }
 }

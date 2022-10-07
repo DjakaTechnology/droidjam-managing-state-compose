@@ -2,26 +2,26 @@ package id.djaka.droidjam.common.ui.booking.addon_widget
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.GetAddOnSelectorUseCase
-import id.djaka.droidjam.common.framework.MoleculePresenter
+import id.djaka.droidjam.common.framework.Presenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.item.AddonSelectorModel
 import kotlinx.coroutines.flow.Flow
 
 class AddonPresenter constructor(
     private val getAddOnSelectorUseCase: GetAddOnSelectorUseCase,
-) : MoleculePresenter<AddonPresenter.Event, AddonPresenter.UIState> {
+) : Presenter<AddonPresenter.Event, AddonPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): UIState {
-        var itemState: UIState.ItemState by remember { mutableStateOf(UIState.ItemState.Loading) }
+    override fun present(event: Flow<Event>): Model {
+        var itemState: Model.ItemState by remember { mutableStateOf(Model.ItemState.Loading) }
         val items = remember { mutableStateListOf<AddonSelectorModel>() }
 
         LaunchedEffect(Unit) {
-            itemState = UIState.ItemState.Loading
+            itemState = Model.ItemState.Loading
 
             val newItems = getAddOnSelectorUseCase()
             items.clear()
             items.addAll(newItems)
 
-            itemState = UIState.ItemState.Success(items)
+            itemState = Model.ItemState.Success(items)
         }
 
         LaunchedEffect(Unit) {
@@ -34,7 +34,7 @@ class AddonPresenter constructor(
             }
         }
 
-        return UIState(
+        return Model(
             itemState = itemState
         )
     }
@@ -44,7 +44,7 @@ class AddonPresenter constructor(
     }
 
     @Immutable
-    class UIState(
+    class Model(
         val itemState: ItemState
     ) {
         sealed class ItemState {

@@ -2,13 +2,13 @@ package id.djaka.droidjam.common.ui.booking.booking_info_widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import id.djaka.droidjam.common.framework.MoleculePresenter
+import id.djaka.droidjam.common.framework.Presenter
 import kotlinx.coroutines.flow.Flow
 
-class BookingInfoPresenter : MoleculePresenter<BookingInfoPresenter.Event, BookingInfoPresenter.UIState> {
+class BookingInfoPresenter : Presenter<BookingInfoPresenter.Event, BookingInfoPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): UIState {
-        return UIState(
+    override fun present(event: Flow<Event>): Model {
+        return Model(
             "SG",
             "Djaka Pradana",
             1
@@ -18,7 +18,7 @@ class BookingInfoPresenter : MoleculePresenter<BookingInfoPresenter.Event, Booki
     sealed class Event
 
     @Immutable
-    class UIState(
+    class Model(
         val productId: String,
         val mainTraveler: String,
         val pax: Int,

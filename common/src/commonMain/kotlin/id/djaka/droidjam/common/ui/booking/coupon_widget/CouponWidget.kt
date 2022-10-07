@@ -19,7 +19,7 @@ import id.djaka.droidjam.common.ui.theme.SpacingXS
 @Composable
 fun CouponWidget(
     modifier: Modifier = Modifier,
-    state: CouponPresenter.UIState,
+    state: CouponPresenter.Model,
     action: (CouponPresenter.Event) -> Unit
 ) {
     Column(modifier) {
@@ -50,19 +50,19 @@ fun CouponWidget(
         }
 
         when (state.couponValidation) {
-            is CouponPresenter.UIState.ValidationResult.Invalid -> {
+            is CouponPresenter.Model.ValidationResult.Invalid -> {
                 Text(state.couponValidation.message, color = MaterialTheme.colorScheme.error)
             }
 
-            is CouponPresenter.UIState.ValidationResult.Success -> {
+            is CouponPresenter.Model.ValidationResult.Success -> {
                 Text(state.couponValidation.discountMessage, color = MaterialTheme.colorScheme.primary)
             }
 
-            CouponPresenter.UIState.ValidationResult.Loading -> {
+            CouponPresenter.Model.ValidationResult.Loading -> {
                 Text("Checking...")
             }
 
-            CouponPresenter.UIState.ValidationResult.Idle -> {}
+            CouponPresenter.Model.ValidationResult.Idle -> {}
         }
     }
 }

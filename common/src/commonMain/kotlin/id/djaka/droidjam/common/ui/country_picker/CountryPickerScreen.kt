@@ -21,8 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import id.djaka.droidjam.common.Platform
-import id.djaka.droidjam.common.di.CoreDIManager
-import id.djaka.droidjam.common.framework.rememberLaunchMoleculePresenter
 import id.djaka.droidjam.common.getPlatform
 import id.djaka.droidjam.common.model.CountryCodeModel
 import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
@@ -30,13 +28,11 @@ import id.djaka.droidjam.common.ui.theme.*
 import io.kamel.image.KamelImage
 import io.kamel.image.lazyPainterResource
 import io.ktor.http.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
 
 @Composable
 fun CountryPickerScreen(
-    state: CountryPickerPresenter.UIState,
-    event: (CountryPickerPresenter.Event) -> Unit = {},
+    state: CountryPickerPresenter.Model,
+    event: (CountryPickerEvent) -> Unit = {},
 ) {
     val itemState = state.countryListState
     val query = state.searchBox
@@ -50,13 +46,12 @@ fun CountryPickerScreen(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.country_code_search_title),
             text = "Search title",
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
         )
-        if (state.selectedCountry != null) {
-            Text("Selected " + state.selectedCountry.name)
+        if (state.selectedCountryDisplay != null) {
+            Text(state.selectedCountryDisplay)
         }
         Spacer(modifier = Modifier.size(12.dp))
 
@@ -64,11 +59,10 @@ fun CountryPickerScreen(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             value = query,
-            onValueChange = { event(CountryPickerPresenter.Event.SearchBoxChanged(it)) },
+            onValueChange = { event(CountryPickerEvent.SearchBoxChanged(it)) },
             placeholder = {
                 Text(
                     modifier = Modifier.alpha(0.25f),
-//                    text = stringResource(id = R.string.country_code_placeholder),
                     text = "Type anything",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -81,30 +75,22 @@ fun CountryPickerScreen(
             keyboardActions = KeyboardActions(
                 onSearch = { focusManager.clearFocus() }
             ),
-            leadingIcon = {
-//                Icon(
-//                    modifier = Modifier.size(24.dp),
-////                    painter = painterResource(R.drawable.ic_search),
-//                    painter = painterResource("drawable/ic_search.xml"),
-//                    contentDescription = "search",
-//                )
-            }
         )
 
         when (itemState) {
-            CountryPickerPresenter.UIState.CountryListState.Loading -> {
+            CountryPickerPresenter.Model.CountryListState.Loading -> {
                 Box(Modifier.fillMaxWidth().padding(SpacingM), contentAlignment = Alignment.Center) {
                     LinearProgressIndicator(Modifier.fillMaxWidth())
                 }
             }
 
-            is CountryPickerPresenter.UIState.CountryListState.Empty -> {
+            is CountryPickerPresenter.Model.CountryListState.Empty -> {
                 Box(Modifier.fillMaxWidth().padding(SpacingM)) {
                     Text(itemState.message)
                 }
             }
 
-            is CountryPickerPresenter.UIState.CountryListState.Success -> {
+            is CountryPickerPresenter.Model.CountryListState.Success -> {
                 CountryCodeList(itemState.countryCodes, keyboard, event)
             }
         }
@@ -112,7 +98,7 @@ fun CountryPickerScreen(
 }
 
 @Composable
-private fun CountryCodeList(items: List<CountryPickerItem>, keyboard: SoftwareKeyboardController?, event: (CountryPickerPresenter.Event) -> Unit) {
+private fun CountryCodeList(items: List<CountryPickerItem>, keyboard: SoftwareKeyboardController?, event: (CountryPickerEvent) -> Unit) {
     LazyColumn {
         itemsIndexed(items) { index, it ->
             SpacerVertical(SpacingS)
@@ -132,7 +118,7 @@ private fun CountryCodeList(items: List<CountryPickerItem>, keyboard: SoftwareKe
                         onClick = {
                             keyboard?.hide()
 
-                            event(CountryPickerPresenter.Event.ItemClicked(it))
+                            event(CountryPickerEvent.ItemClicked(it))
                         })
                 }
             }
@@ -201,42 +187,3 @@ private fun CountryFlag(item: CountryPickerItem.Picker) {
     }
 }
 
-private fun countryPickerItem() = CountryPickerItem.Picker(
-    CountryCodeModel(
-        "Ascension Island",
-        "AC",
-        "\uD83C\uDDE6\uD83C\uDDE8 ",
-        "U+1F1E6 U+1F1E8",
-        ""
-    )
-)
-
-//@Preview
-//@Composable
-//private fun ItemPreview() {
-//    CoreTheme {
-//        CountryItem(item = countryPickerItem())
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun DefaultPreview() {
-//    val viewModel = remember {
-//        CountryPickerPresenter.State(
-//            searchBox = "",
-//            countryListState = CountryPickerPresenter.State.CountryListState.Success(
-//                listOf(
-//                    countryPickerItem(),
-//                    countryPickerItem(),
-//                )
-//            )
-//        )
-//    }
-//
-//    CoreTheme {
-//        CountryPickerScreen(
-//            viewModel,
-//        )
-//    }
-//}

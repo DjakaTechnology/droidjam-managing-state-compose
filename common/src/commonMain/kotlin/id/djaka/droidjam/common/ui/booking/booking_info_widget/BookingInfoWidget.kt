@@ -14,7 +14,7 @@ import id.djaka.droidjam.common.ui.theme.SpacingM
 @Composable
 fun BookingInfoWidget(
     modifier: Modifier = Modifier,
-    state: BookingInfoPresenter.UIState
+    state: BookingInfoPresenter.Model
 ) {
     Card(modifier) {
         Column(Modifier.padding(SpacingM)) {

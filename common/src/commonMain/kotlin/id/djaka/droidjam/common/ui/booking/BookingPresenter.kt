@@ -1,7 +1,7 @@
 package id.djaka.droidjam.common.ui.booking
 
 import androidx.compose.runtime.*
-import id.djaka.droidjam.common.framework.MoleculePresenter
+import id.djaka.droidjam.common.framework.Presenter
 import id.djaka.droidjam.common.framework.rememberLaunchPresenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonPresenter
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresenter
@@ -16,9 +16,9 @@ class BookingPresenter(
     private val bookingInfoPresenter: BookingInfoPresenter,
     private val couponPresenter: CouponPresenter,
     private val priceBreakDownPresenter: PriceBreakDownPresenter,
-) : MoleculePresenter<BookingPresenter.Event, BookingPresenter.UIState> {
+) : Presenter<BookingPresenter.Event, BookingPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): UIState {
+    override fun present(event: Flow<Event>): Model {
         val coroutineScope = rememberCoroutineScope()
 
         val (addonEvent, addonState) = addonPresenter.rememberLaunchPresenter()
@@ -26,7 +26,7 @@ class BookingPresenter(
         val (couponEvent, couponState) = couponPresenter.rememberLaunchPresenter()
         val (priceEvent, priceState) = priceBreakDownPresenter.rememberLaunchPresenter()
 
-        var submitResult: UIState.SubmitResult by remember { mutableStateOf(UIState.SubmitResult.Idle) }
+        var submitResult: Model.SubmitResult by remember { mutableStateOf(Model.SubmitResult.Idle) }
 
         LaunchedEffect(couponState.couponValidation, bookingInfoState.productId, addonState.selectedAddon) {
             delay(200) // Debounce
@@ -48,11 +48,11 @@ class BookingPresenter(
                     is Event.PriceBreakdownEvent -> priceEvent.emit(it.event)
 
                     is Event.Submit -> coroutineScope.launch {
-                        submitResult = UIState.SubmitResult.Submitting
+                        submitResult = Model.SubmitResult.Submitting
 
                         if (!it.forceSubmit) {
                             if (couponState.isValidationFailed) {
-                                submitResult = UIState.SubmitResult.RequireUserActionDialog(
+                                submitResult = Model.SubmitResult.RequireUserActionDialog(
                                     "Invalid Coupon",
                                     "Your coupon is invalid, do you want to clear and continue the booking?",
                                     "YES"
@@ -62,19 +62,19 @@ class BookingPresenter(
                         }
 
                         delay(2000) // Pretend API Call
-                        submitResult = UIState.SubmitResult.Success
+                        submitResult = Model.SubmitResult.Success
                     }
 
                     is Event.DismissRequireUserActionDialog -> {
-                        submitResult = UIState.SubmitResult.Idle
+                        submitResult = Model.SubmitResult.Idle
                     }
 
-                    Event.DismissSuccessDialog -> submitResult = UIState.SubmitResult.Idle
+                    Event.DismissSuccessDialog -> submitResult = Model.SubmitResult.Idle
                 }
             }
         }
 
-        return UIState(
+        return Model(
             addonState = addonState,
             bookingInfoState = bookingInfoState,
             couponInfoState = couponState,
@@ -94,11 +94,11 @@ class BookingPresenter(
     }
 
     @Immutable
-    data class UIState(
-        val addonState: AddonPresenter.UIState,
-        val bookingInfoState: BookingInfoPresenter.UIState,
-        val couponInfoState: CouponPresenter.UIState,
-        val priceBreakDownState: PriceBreakDownPresenter.UIState,
+    data class Model(
+        val addonState: AddonPresenter.Model,
+        val bookingInfoState: BookingInfoPresenter.Model,
+        val couponInfoState: CouponPresenter.Model,
+        val priceBreakDownState: PriceBreakDownPresenter.Model,
         val submitResult: SubmitResult,
     ) {
         sealed class SubmitResult {

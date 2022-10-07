@@ -12,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.Dialog
 import id.djaka.droidjam.common.di.CoreDIManager
 import id.djaka.droidjam.common.framework.rememberLaunchPresenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonWidget
@@ -20,13 +19,11 @@ import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresen
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoWidget
 import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponWidget
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDown
-import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDownPresenter
 import id.djaka.droidjam.common.ui.dialog.CoreDialog
 import id.djaka.droidjam.common.ui.theme.CoreTheme
 import id.djaka.droidjam.common.ui.theme.SpacerVertical
 import id.djaka.droidjam.common.ui.theme.SpacingM
 import id.djaka.droidjam.common.ui.theme.SpacingXL
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,7 +48,7 @@ fun createPresenter(): BookingPresenter {
 }
 
 @Composable
-fun BookingScreen(state: BookingPresenter.UIState, action: (BookingPresenter.Event) -> Unit) {
+fun BookingScreen(state: BookingPresenter.Model, action: (BookingPresenter.Event) -> Unit) {
     if (state.isSubmitting) {
         SubmittingDialog()
     }
@@ -120,7 +117,7 @@ fun BookingScreen(state: BookingPresenter.UIState, action: (BookingPresenter.Eve
 @Composable
 private fun UserActionDialog(
     action: (BookingPresenter.Event) -> Unit,
-    state: BookingPresenter.UIState.SubmitResult.RequireUserActionDialog
+    state: BookingPresenter.Model.SubmitResult.RequireUserActionDialog
 ) {
     CoreDialog(
         onDismissRequest = { action(BookingPresenter.Event.DismissRequireUserActionDialog) },

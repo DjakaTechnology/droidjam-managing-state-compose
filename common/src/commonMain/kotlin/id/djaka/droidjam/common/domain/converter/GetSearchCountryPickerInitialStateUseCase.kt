@@ -16,7 +16,7 @@ class GetSearchCountryPickerInitialStateUseCase(
     operator fun invoke(): Flow<List<CountryPickerItem>> {
         print("Country Picker generated flow")
         return combine(
-            countryCodeRepository.getRecentCountryCode(),
+            countryCodeRepository.getRecentCountryCodeFlow(),
             countryCodeRepository.getDefaultCountryCodeFlow(),
             flow { emit(countryCodeRepository.getSortedCountryCode()) },
         ) { recentCountryCode, defaultCountry, sortedCountryCode ->

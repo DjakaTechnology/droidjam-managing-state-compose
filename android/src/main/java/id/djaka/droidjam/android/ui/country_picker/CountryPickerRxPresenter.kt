@@ -81,18 +81,8 @@ class CountryPickerRxPresenter(
         )
     }
 
-    private fun transformInitialState(): ObservableTransformer<List<CountryPickerItem>, CountryPickerRxModel.CountryListState> = ObservableTransformer {
-        it.map {
-            if (it.isEmpty()) {
-                CountryPickerRxModel.CountryListState.Loading
-            } else {
-                CountryPickerRxModel.CountryListState.Success(it)
-            }
-        }
-    }
-
     private fun transformFilterCountry(): ObservableTransformer<String, CountryPickerRxModel.CountryListState> = ObservableTransformer { queryObservable ->
-        queryObservable.flatMap { it ->
+        queryObservable.flatMap {
             Observable.zip(
                 Observable.just(it),
                 searchCountryUseCases.searchCountryCodeFilter.invokeRx(it)

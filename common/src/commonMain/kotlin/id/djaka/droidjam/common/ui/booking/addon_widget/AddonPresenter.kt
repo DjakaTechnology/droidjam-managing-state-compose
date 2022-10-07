@@ -2,7 +2,7 @@ package id.djaka.droidjam.common.ui.booking.addon_widget
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.GetAddOnSelectorUseCase
-import id.djaka.droidjam.common.framework.Presenter
+import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.item.AddonSelectorModel
 import kotlinx.coroutines.flow.Flow
 

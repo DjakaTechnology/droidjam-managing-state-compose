@@ -1,13 +1,16 @@
 package id.djaka.droidjam.android.ui.country_picker
 
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
-import id.djaka.droidjam.common.di.CoreDIManager
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerEvent
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerPresenter
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerScreen
-import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerRxModel
-import id.djaka.droidjam.common.ui.country_picker.variant.toGenericModel
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerRxModel
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.toGenericModel
+import id.djaka.droidjam.shared.locale.ui.country_picker.CountryPickerScreen
 import io.reactivex.rxjava3.subjects.ReplaySubject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx3.asFlow
@@ -25,7 +28,7 @@ fun CountryPickerScreenRx() {
 }
 
 private fun createPresenter(): CountryPickerRxPresenter {
-    val dependency = CoreDIManager.subComponent()
+    val dependency = LocaleDIManager.subComponent()
     return CountryPickerRxPresenter(
         searchCountryUseCases = dependency.searchCountryUseCase,
         saveRecentCountryUseCase = dependency.saveRecentCountryUseCase

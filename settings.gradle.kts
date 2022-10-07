@@ -20,3 +20,6 @@ pluginManagement {
 rootProject.name = "droidjam"
 
 include(":android", ":desktop", ":common")
+include(":shared:core")
+include(":shared:locale:locale-ui")
+include(":shared:core-ui")

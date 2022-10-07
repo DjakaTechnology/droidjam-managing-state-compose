@@ -1,12 +1,12 @@
 package id.djaka.droidjam.android.ui.country_picker
 
-import id.djaka.droidjam.common.domain.SaveRecentCountryUseCase
-import id.djaka.droidjam.common.domain.SearchCountryCodeFilterUseCase
-import id.djaka.droidjam.common.domain.SearchCountryUseCases
-import id.djaka.droidjam.common.ui.country_picker.CountryPickerEvent
-import id.djaka.droidjam.common.ui.country_picker.item.CountryPickerItem
-import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerRxModel
-import id.djaka.droidjam.common.ui.country_picker.variant.CountryPickerRxResult
+import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
+import id.djaka.droidjam.shared.locale.app.domain.SearchCountryCodeFilterUseCase
+import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerRxModel
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerRxResult
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
 import kotlinx.coroutines.rx3.asObservable

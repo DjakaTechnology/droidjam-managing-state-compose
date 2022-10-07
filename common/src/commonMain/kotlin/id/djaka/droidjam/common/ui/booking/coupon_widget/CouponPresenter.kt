@@ -2,7 +2,7 @@ package id.djaka.droidjam.common.ui.booking.coupon_widget
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.ApplyCouponUseCase
-import id.djaka.droidjam.common.framework.Presenter
+import id.djaka.droidjam.shared.core.framework.Presenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 

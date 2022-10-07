@@ -2,7 +2,7 @@ package id.djaka.droidjam.common.ui.booking.price_breakdown
 
 import androidx.compose.runtime.*
 import id.djaka.droidjam.common.domain.CalculatePriceBreakDownUseCase
-import id.djaka.droidjam.common.framework.Presenter
+import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.common.model.PriceBreakDownModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

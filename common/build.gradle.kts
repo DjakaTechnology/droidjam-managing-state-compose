@@ -2,13 +2,13 @@ import org.jetbrains.compose.compose
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
     id("com.android.library")
-    id("kotlin-parcelize")
-    id("kotlinx-serialization")
     id("dev.icerock.mobile.multiplatform-resources")
+    id(BuildPlugins.serialization)
     id(BuildPlugins.sqlDelight)
     id(BuildPlugins.molecule)
+    id(BuildPlugins.jetbrainCompose)
+    id(BuildPlugins.kotlinParcelize)
 }
 
 group = "id.djaka"
@@ -18,13 +18,16 @@ kotlin {
     android()
     jvm("desktop") {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
         }
     }
 
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":shared:core"))
+                implementation(project(":shared:core-ui"))
+                implementation(project(":shared:locale:locale-ui"))
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
@@ -52,8 +55,6 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("androidx.appcompat:appcompat:1.2.0")
-                implementation("androidx.core:core-ktx:1.3.1")
                 implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightAndroidDriver)
                 implementation(Libraries.ktorClientCIO)
@@ -111,12 +112,4 @@ multiplatformResources {
     multiplatformResourcesPackage = "id.djaka.droidjam" // required
 //    multiplatformResourcesVisibility = MRVisibility.Internal // optional, default Public
     iosBaseLocalizationRegion = "en" // optional, default "en"
-}
-
-sqldelight {
-    database("DroidJamDB") { // This will be the name of the generated database class.
-        packageName = "id.djaka.droidjam.database"
-        deriveSchemaFromMigrations = true
-        verifyMigrations = true
-    }
 }

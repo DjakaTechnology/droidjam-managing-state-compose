@@ -2,7 +2,7 @@
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import id.djaka.droidjam.common.App
-import id.djaka.droidjam.common.ui.theme.CoreTheme
+import id.djaka.droidjam.shared.core_ui.theme.CoreTheme
 
 
 fun main() = application {

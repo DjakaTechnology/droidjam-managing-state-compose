@@ -3,6 +3,7 @@ object DroidJam {
     const val targetSdk = 33
     const val compileSdk = 33
     const val applicationId = "id.djaka.droidjam"
+    const val desktopKotlinJvmTarget = "11"
 
     // Version
     const val versionName = "1.0-SNAPSHOT"
@@ -14,8 +15,7 @@ object Versions {
     const val kotlin = "1.7.10"
 
     // Compose
-    const val compose = "1.2.0"
-    const val composeMaterial3 = "1.0.0-beta02"
+    const val composeActivity = "1.6.0"
 
     // Coroutines
     const val coroutines = "1.6.4"
@@ -35,20 +35,8 @@ object Versions {
 }
 
 object Libraries {
-    const val material3 = "com.google.android.material:material:1.6.1"
-
-    // Compose
-    const val composeCompiler = "androidx.compose.compiler:compiler:${Versions.compose}"
-    const val composeUI = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composePreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
-    const val composeGoogleFonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.compose}"
-
-    // Compose Material 3
-    const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
-    const val composeMaterial3WindowSize = "androidx.compose.material3:material3-window-size-class:${Versions.composeMaterial3}"
-
     // Compose Activtiy
-    const val composeActivity = "androidx.activity:activity-compose:1.5.1"
+    const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
 
     // Coroutines
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -94,4 +82,7 @@ object BuildClassPath {
 object BuildPlugins {
     const val sqlDelight = "com.squareup.sqldelight"
     const val molecule = "app.cash.molecule"
+    const val kotlinParcelize = "kotlin-parcelize"
+    const val jetbrainCompose = "org.jetbrains.compose"
+    const val serialization = "kotlinx-serialization"
 }

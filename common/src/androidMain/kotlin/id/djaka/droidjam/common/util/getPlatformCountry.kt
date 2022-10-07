@@ -2,7 +2,7 @@ package id.djaka.droidjam.common.util
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import id.djaka.droidjam.common.di.CoreAndroidDIManager
+import id.djaka.droidjam.shared.core.di.CoreAndroidDIManager
 import java.util.*
 
 actual fun getPlatformCountry(): String {

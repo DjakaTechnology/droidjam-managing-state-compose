@@ -1,12 +1,19 @@
 package id.djaka.droidjam.common.ui.booking
 
-import androidx.compose.runtime.*
-import id.djaka.droidjam.common.framework.Presenter
-import id.djaka.droidjam.common.framework.rememberLaunchPresenter
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonPresenter
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresenter
 import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponPresenter
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDownPresenter
+import id.djaka.droidjam.shared.core.framework.Presenter
+import id.djaka.droidjam.shared.core.framework.rememberLaunchPresenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

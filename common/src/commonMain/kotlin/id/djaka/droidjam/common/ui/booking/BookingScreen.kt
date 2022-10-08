@@ -12,18 +12,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import id.djaka.droidjam.common.di.CoreDIManager
-import id.djaka.droidjam.common.framework.rememberLaunchPresenter
+import id.djaka.droidjam.common.di.AppDIManager
+import id.djaka.driodjam.shared.core.molecule.rememberLaunchPresenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonWidget
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresenter
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoWidget
 import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponWidget
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDown
-import id.djaka.droidjam.common.ui.dialog.CoreDialog
-import id.djaka.droidjam.common.ui.theme.CoreTheme
-import id.djaka.droidjam.common.ui.theme.SpacerVertical
-import id.djaka.droidjam.common.ui.theme.SpacingM
-import id.djaka.droidjam.common.ui.theme.SpacingXL
+import id.djaka.droidjam.shared.core_ui.dialog.CoreDialog
+import id.djaka.droidjam.shared.core_ui.theme.CoreTheme
+import id.djaka.droidjam.shared.core_ui.theme.SpacerVertical
+import id.djaka.droidjam.shared.core_ui.theme.SpacingM
+import id.djaka.droidjam.shared.core_ui.theme.SpacingXL
 import kotlinx.coroutines.launch
 
 @Composable
@@ -38,7 +38,7 @@ fun BookingScreen() {
 }
 
 fun createPresenter(): BookingPresenter {
-    val subComponent = CoreDIManager.subComponent()
+    val subComponent = AppDIManager.subComponent()
     return BookingPresenter(
         addonPresenter = subComponent.addonPresenter,
         bookingInfoPresenter = BookingInfoPresenter(),

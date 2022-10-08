@@ -1,6 +1,5 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -14,7 +13,7 @@ version = "1.0-SNAPSHOT"
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
         }
         withJava()
     }
@@ -22,6 +21,11 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(project(":common"))
+                implementation(project(":shared:core"))
+                implementation(project(":shared:core-ui"))
+                implementation(project(":shared:locale:locale-ui"))
+                implementation(project(":shared:locale:locale-presentation-api"))
+                implementation(project(":shared:locale:locale-app"))
                 implementation(compose.desktop.currentOs)
             }
         }

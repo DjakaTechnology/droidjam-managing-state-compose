@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="core-ios-desktop">
+    <output-path>$PROJECT_DIR$/shared/core-ios/build/libs</output-path>
+    <root id="archive" name="core-ios-desktop.jar">
+      <element id="module-output" name="droidjam.shared.core-ios.desktopMain" />
+    </root>
+  </artifact>
+</component>

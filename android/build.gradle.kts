@@ -16,6 +16,11 @@ repositories {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":shared:core"))
+    implementation(project(":shared:core-ui"))
+    implementation(project(":shared:locale:locale-ui"))
+    implementation(project(":shared:locale:locale-presentation-api"))
+    implementation(project(":shared:locale:locale-app")) // Need to reference this because rxJava only exist in android
     implementation(Libraries.composeActivity)
     @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
     implementation(compose.material3)

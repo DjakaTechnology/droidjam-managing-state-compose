@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import id.djaka.droidjam.common.ui.theme.CardClickableShape
-import id.djaka.droidjam.common.ui.theme.SpacerVertical
-import id.djaka.droidjam.common.ui.theme.SpacingM
-import id.djaka.droidjam.common.ui.theme.SpacingXS
+import id.djaka.droidjam.shared.core_ui.theme.CardClickableShape
+import id.djaka.droidjam.shared.core_ui.theme.SpacerVertical
+import id.djaka.droidjam.shared.core_ui.theme.SpacingM
+import id.djaka.droidjam.shared.core_ui.theme.SpacingXS
 
 @Composable
 fun CouponWidget(

@@ -7,8 +7,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import id.djaka.droidjam.common.ui.theme.SpacerVertical
-import id.djaka.droidjam.common.ui.theme.SpacingM
+import id.djaka.droidjam.shared.core_ui.theme.SpacerVertical
+import id.djaka.droidjam.shared.core_ui.theme.SpacingM
 
 @Composable
 fun AddonWidget(

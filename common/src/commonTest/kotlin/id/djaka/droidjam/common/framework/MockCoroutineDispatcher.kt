@@ -2,6 +2,7 @@
 
 package id.djaka.droidjam.common.framework
 
+import id.djaka.droidjam.shared.core.framework.dispatcher.CoroutineDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

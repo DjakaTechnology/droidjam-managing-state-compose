@@ -3,6 +3,7 @@ object DroidJam {
     const val targetSdk = 33
     const val compileSdk = 33
     const val applicationId = "id.djaka.droidjam"
+    const val desktopKotlinJvmTarget = "11"
 
     // Version
     const val versionName = "1.0-SNAPSHOT"
@@ -14,8 +15,7 @@ object Versions {
     const val kotlin = "1.7.10"
 
     // Compose
-    const val compose = "1.2.0"
-    const val composeMaterial3 = "1.0.0-beta02"
+    const val composeActivity = "1.6.0"
 
     // Coroutines
     const val coroutines = "1.6.4"
@@ -32,23 +32,13 @@ object Versions {
     const val molecule = "0.5.0-beta01"
     const val turbine = "0.11.0"
     const val mockk = "1.13.2"
+
+    const val kmpNativeCoroutines = "0.13.1"
 }
 
 object Libraries {
-    const val material3 = "com.google.android.material:material:1.6.1"
-
-    // Compose
-    const val composeCompiler = "androidx.compose.compiler:compiler:${Versions.compose}"
-    const val composeUI = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composePreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
-    const val composeGoogleFonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.compose}"
-
-    // Compose Material 3
-    const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
-    const val composeMaterial3WindowSize = "androidx.compose.material3:material3-window-size-class:${Versions.composeMaterial3}"
-
     // Compose Activtiy
-    const val composeActivity = "androidx.activity:activity-compose:1.5.1"
+    const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
 
     // Coroutines
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -77,6 +67,9 @@ object Libraries {
 
     // RxJava
     const val rxJava = "io.reactivex.rxjava3:rxjava:3.1.5"
+
+    // DateTime
+    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
 
 object TestLibraries {
@@ -89,9 +82,15 @@ object BuildClassPath {
     const val kotlinSerializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     const val sqlDelightPlugin = "com.squareup.sqldelight:gradle-plugin:1.5.3"
     const val moleculePlugin = "app.cash.molecule:molecule-gradle-plugin:${Versions.molecule}"
+    const val mokoSwift = "dev.icerock.moko:kswift-gradle-plugin:0.6.0"
 }
 
 object BuildPlugins {
     const val sqlDelight = "com.squareup.sqldelight"
     const val molecule = "app.cash.molecule"
+    const val kotlinParcelize = "kotlin-parcelize"
+    const val jetbrainCompose = "org.jetbrains.compose"
+    const val serialization = "kotlinx-serialization"
+    const val kmpNativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
+    const val mokoSwift = "dev.icerock.moko.kswift"
 }

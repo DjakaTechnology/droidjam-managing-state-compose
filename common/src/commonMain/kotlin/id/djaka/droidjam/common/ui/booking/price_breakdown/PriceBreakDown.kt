@@ -13,7 +13,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import id.djaka.droidjam.common.model.PriceBreakDownModel
-import id.djaka.droidjam.common.ui.theme.*
+import id.djaka.droidjam.shared.core_ui.theme.SpacerHorizontal
+import id.djaka.droidjam.shared.core_ui.theme.SpacerVertical
+import id.djaka.droidjam.shared.core_ui.theme.SpacingM
+import id.djaka.droidjam.shared.core_ui.theme.SpacingXS
 
 @Composable
 fun PriceBreakDown(

@@ -1,23 +1,21 @@
 package id.djaka.droidjam.shared.locale.app.presenter.country_picker
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import id.djaka.droidjam.shared.core.framework.Presenter
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 class CountryPickerPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-) : Presenter<CountryPickerEvent, CountryPickerModel> {
+) : MoleculePresenter<CountryPickerEvent, CountryPickerModel> {
 
     private val initialStateFlow = searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
 

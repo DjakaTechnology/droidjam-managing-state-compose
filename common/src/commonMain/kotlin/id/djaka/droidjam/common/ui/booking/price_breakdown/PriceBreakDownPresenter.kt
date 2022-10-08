@@ -1,6 +1,7 @@
 package id.djaka.droidjam.common.ui.booking.price_breakdown
 
 import androidx.compose.runtime.*
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
 import id.djaka.droidjam.common.domain.CalculatePriceBreakDownUseCase
 import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.common.model.PriceBreakDownModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class PriceBreakDownPresenter constructor(
     private val calculatePriceBreakDownUseCase: CalculatePriceBreakDownUseCase
-) : Presenter<PriceBreakDownPresenter.Event, PriceBreakDownPresenter.Model> {
+) : MoleculePresenter<PriceBreakDownPresenter.Event, PriceBreakDownPresenter.Model> {
     @Composable
     override fun present(event: Flow<Event>): Model {
         var isExpanded by remember { mutableStateOf(false) }

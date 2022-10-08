@@ -6,14 +6,14 @@ Pod::Spec.new do |spec|
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'Some description for the Shared Module'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/local-app.framework'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/SharedLocaleApp.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target = '14.1'
                 
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':shared:locale:locale-app',
-        'PRODUCT_MODULE_NAME' => 'local-app',
+        'PRODUCT_MODULE_NAME' => 'SharedLocaleApp',
     }
                 
     spec.script_phases = [

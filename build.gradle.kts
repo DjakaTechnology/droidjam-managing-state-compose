@@ -9,6 +9,7 @@ buildscript {
         classpath(BuildClassPath.kotlinSerializationPlugin)
         classpath(BuildClassPath.sqlDelightPlugin)
         classpath(BuildClassPath.moleculePlugin)
+        classpath(BuildClassPath.mokoSwift)
     }
 }
 

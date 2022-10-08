@@ -1,6 +1,7 @@
 package id.djaka.droidjam.common.ui.booking.coupon_widget
 
 import androidx.compose.runtime.*
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
 import id.djaka.droidjam.common.domain.ApplyCouponUseCase
 import id.djaka.droidjam.shared.core.framework.Presenter
 import kotlinx.coroutines.delay
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CouponPresenter constructor(
     private val applyCouponUseCase: ApplyCouponUseCase,
-) : Presenter<CouponPresenter.Event, CouponPresenter.Model> {
+) : MoleculePresenter<CouponPresenter.Event, CouponPresenter.Model> {
     @Composable
     override fun present(event: Flow<Event>): Model {
         var coupon by remember { mutableStateOf("") }

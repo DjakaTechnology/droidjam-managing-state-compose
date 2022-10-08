@@ -13,7 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import id.djaka.droidjam.common.di.AppDIManager
-import id.djaka.droidjam.shared.core.framework.rememberLaunchPresenter
+import id.djaka.driodjam.shared.core.molecule.rememberLaunchPresenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonWidget
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresenter
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoWidget

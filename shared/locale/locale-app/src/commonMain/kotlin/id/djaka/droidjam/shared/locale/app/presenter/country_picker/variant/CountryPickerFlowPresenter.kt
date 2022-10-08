@@ -1,32 +1,24 @@
 package id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant
 
+import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerPresenter
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class CountryPickerFlowPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-) {
-    fun presentFlow(
+): Presenter<CountryPickerEvent, CountryPickerModel> {
+    override fun present(
         coroutineScope: CoroutineScope,
         event: Flow<CountryPickerEvent>,
     ): StateFlow<CountryPickerModel> {

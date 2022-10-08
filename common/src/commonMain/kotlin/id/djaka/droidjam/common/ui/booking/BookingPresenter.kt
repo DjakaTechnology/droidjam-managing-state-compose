@@ -8,12 +8,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
+import id.djaka.driodjam.shared.core.molecule.rememberLaunchPresenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.AddonPresenter
 import id.djaka.droidjam.common.ui.booking.booking_info_widget.BookingInfoPresenter
 import id.djaka.droidjam.common.ui.booking.coupon_widget.CouponPresenter
 import id.djaka.droidjam.common.ui.booking.price_breakdown.PriceBreakDownPresenter
-import id.djaka.droidjam.shared.core.framework.Presenter
-import id.djaka.droidjam.shared.core.framework.rememberLaunchPresenter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -23,9 +23,9 @@ class BookingPresenter(
     private val bookingInfoPresenter: BookingInfoPresenter,
     private val couponPresenter: CouponPresenter,
     private val priceBreakDownPresenter: PriceBreakDownPresenter,
-) : Presenter<BookingPresenter.Event, BookingPresenter.Model> {
+) : MoleculePresenter<BookingPresenter.Event, BookingPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): Model {
+    override fun presentComposable(event: Flow<Event>): Model {
         val coroutineScope = rememberCoroutineScope()
 
         val (addonEvent, addonState) = addonPresenter.rememberLaunchPresenter()

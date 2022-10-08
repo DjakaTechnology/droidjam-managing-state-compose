@@ -6,11 +6,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import id.djaka.droidjam.shared.core.framework.rememberLaunchPresenter
+import id.djaka.driodjam.shared.core.molecule.rememberLaunchMoleculePresenter
+import id.djaka.driodjam.shared.core.molecule.rememberLaunchPresenter
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerFlowLikeRxPresenter
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerFlowPresenter
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.toGenericModel
-import id.djaka.droidjam.shared.core.framework.rememberLaunchMoleculePresenter
 import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerPresenter

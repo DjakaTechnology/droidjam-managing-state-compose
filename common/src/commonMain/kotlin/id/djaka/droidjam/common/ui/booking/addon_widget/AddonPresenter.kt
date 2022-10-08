@@ -1,6 +1,7 @@
 package id.djaka.droidjam.common.ui.booking.addon_widget
 
 import androidx.compose.runtime.*
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
 import id.djaka.droidjam.common.domain.GetAddOnSelectorUseCase
 import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.common.ui.booking.addon_widget.item.AddonSelectorModel
@@ -8,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 class AddonPresenter constructor(
     private val getAddOnSelectorUseCase: GetAddOnSelectorUseCase,
-) : Presenter<AddonPresenter.Event, AddonPresenter.Model> {
+) : MoleculePresenter<AddonPresenter.Event, AddonPresenter.Model> {
     @Composable
-    override fun present(event: Flow<Event>): Model {
+    override fun presentComposable(event: Flow<Event>): Model {
         var itemState: Model.ItemState by remember { mutableStateOf(Model.ItemState.Loading) }
         val items = remember { mutableStateListOf<AddonSelectorModel>() }
 

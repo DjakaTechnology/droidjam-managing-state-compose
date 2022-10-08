@@ -4,9 +4,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id(BuildPlugins.jetbrainCompose)
-    id(BuildPlugins.kotlinParcelize)
-    id(BuildPlugins.sqlDelight)
+    id(BuildPlugins.molecule)
 }
 
 kotlin {
@@ -14,7 +12,6 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-
     jvm("desktop") {
         compilations.all {
             kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
@@ -27,19 +24,15 @@ kotlin {
         version = "1.0"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "core"
+            baseName = "core-molecule"
         }
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":shared:core"))
                 implementation(compose.runtime)
-                implementation(Libraries.coroutinesCore)
-                implementation(Libraries.sqlDelightCoroutines)
-                implementation(Libraries.settings)
-                implementation(Libraries.settingsCoroutines)
-                implementation(Libraries.settingsNoArgs)
                 implementation(Libraries.coroutinesCore)
             }
         }
@@ -48,14 +41,8 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-
-        val androidMain by getting {
-            dependencies {
-                implementation(Libraries.sqlDelightAndroidDriver)
-            }
-        }
+        val androidMain by getting
         val androidTest by getting
-
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -64,10 +51,6 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-
-            dependencies {
-                implementation(Libraries.sqlDelightNativeDriver)
-            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -78,28 +61,14 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
-
-        val desktopMain by getting {
-            dependencies {
-                implementation(Libraries.sqlDelightJvmDriver)
-            }
-        }
     }
 }
 
 android {
-    namespace = "id.djaka.droidjam.shared.core"
+    namespace = "id.djaka.driodjam.shared.core.molecule"
     compileSdk = DroidJam.compileSdk
     defaultConfig {
         minSdk = DroidJam.minSdk
         targetSdk = DroidJam.targetSdk
-    }
-}
-
-sqldelight {
-    database("DroidJamDB") {
-        packageName = "id.djaka.droidjam.database"
-        deriveSchemaFromMigrations = true
-        verifyMigrations = true
     }
 }

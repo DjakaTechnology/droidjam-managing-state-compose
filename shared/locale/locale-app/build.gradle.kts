@@ -35,6 +35,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
+                implementation(project(":shared:core-molecule"))
                 implementation(compose.runtime)
                 implementation(Libraries.serialization)
                 implementation(Libraries.settings)

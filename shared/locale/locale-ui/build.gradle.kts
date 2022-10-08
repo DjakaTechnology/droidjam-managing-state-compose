@@ -23,6 +23,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
+                implementation(project(":shared:core-molecule"))
                 implementation(project(":shared:locale:locale-app"))
                 implementation(compose.runtime)
                 implementation(compose.foundation)

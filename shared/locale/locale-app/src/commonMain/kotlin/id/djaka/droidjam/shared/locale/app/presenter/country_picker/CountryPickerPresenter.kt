@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import id.djaka.driodjam.shared.core.molecule.MoleculePresenter
 import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
@@ -17,12 +18,12 @@ import kotlinx.coroutines.flow.Flow
 class CountryPickerPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-) : Presenter<CountryPickerEvent, CountryPickerModel> {
+) : MoleculePresenter<CountryPickerEvent, CountryPickerModel> {
 
     private val initialStateFlow = searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
 
     @Composable
-    override fun present(event: Flow<CountryPickerEvent>): CountryPickerModel {
+    override fun presentComposable(event: Flow<CountryPickerEvent>): CountryPickerModel {
         var searchBox by remember { mutableStateOf("") }
         var selectedCountry by remember { mutableStateOf<CountryCodeModel?>(null) }
         val countryListState = presentCountryListState(searchBox)

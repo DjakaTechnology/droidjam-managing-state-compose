@@ -1,11 +1,11 @@
-package id.djaka.droidjam.shared.locale.ui.country_picker_old
+package id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_old
 
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 
-class CountryPickerScreenState {
+class CountryPickerOldScreenState {
     val initialState = MutableStateFlow(listOf<CountryPickerItem>())
 
     val query = MutableStateFlow("")

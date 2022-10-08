@@ -12,7 +12,7 @@ class CouponPresenter constructor(
     private val applyCouponUseCase: ApplyCouponUseCase,
 ) : MoleculePresenter<CouponPresenter.Event, CouponPresenter.Model> {
     @Composable
-    override fun presentComposable(event: Flow<Event>): Model {
+    override fun present(event: Flow<Event>): Model {
         var coupon by remember { mutableStateOf("") }
         var couponValidation: Model.ValidationResult by remember { mutableStateOf(Model.ValidationResult.Idle) }
 

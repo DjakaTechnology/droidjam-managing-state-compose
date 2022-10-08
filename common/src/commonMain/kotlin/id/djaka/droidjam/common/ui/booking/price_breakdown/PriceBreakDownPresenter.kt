@@ -12,7 +12,7 @@ class PriceBreakDownPresenter constructor(
     private val calculatePriceBreakDownUseCase: CalculatePriceBreakDownUseCase
 ) : MoleculePresenter<PriceBreakDownPresenter.Event, PriceBreakDownPresenter.Model> {
     @Composable
-    override fun presentComposable(event: Flow<Event>): Model {
+    override fun present(event: Flow<Event>): Model {
         var isExpanded by remember { mutableStateOf(false) }
         var totalPriceState: Model.TotalPriceState by remember { mutableStateOf(Model.TotalPriceState.Loading) }
         val coroutineScope = rememberCoroutineScope()

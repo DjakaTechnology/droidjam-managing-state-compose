@@ -4,9 +4,9 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id(BuildPlugins.jetbrainCompose)
     id(BuildPlugins.kotlinParcelize)
     id(BuildPlugins.sqlDelight)
+    id(BuildPlugins.mokoSwift)
 }
 
 kotlin {
@@ -34,7 +34,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(compose.runtime)
                 implementation(Libraries.coroutinesCore)
                 implementation(Libraries.sqlDelightCoroutines)
                 implementation(Libraries.settings)
@@ -101,5 +100,6 @@ sqldelight {
         packageName = "id.djaka.droidjam.database"
         deriveSchemaFromMigrations = true
         verifyMigrations = true
+        linkSqlite = true
     }
 }

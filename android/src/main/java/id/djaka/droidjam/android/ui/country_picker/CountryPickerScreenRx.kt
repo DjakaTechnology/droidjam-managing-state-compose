@@ -7,9 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
-import id.djaka.shared.local.app.presenter.country_picker.variant.CountryPickerRxModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.toGenericModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.CountryPickerRxModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.toGenericModel
 import id.djaka.droidjam.shared.locale.ui.country_picker.CountryPickerScreen
 import io.reactivex.rxjava3.subjects.ReplaySubject
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import kotlinx.coroutines.rx3.asFlow
 fun CountryPickerScreenRx() {
     val presenter = remember { createPresenter() }
     val event = remember { ReplaySubject.create<CountryPickerEvent>() }
-    val state by remember { presenter.presentRx(event).asFlow() }.collectAsState(id.djaka.shared.local.app.presenter.country_picker.variant.CountryPickerRxModel.empty())
+    val state by remember { presenter.presentRx(event).asFlow() }.collectAsState(CountryPickerRxModel.empty())
 
     val coroutineScope = rememberCoroutineScope()
     Surface {

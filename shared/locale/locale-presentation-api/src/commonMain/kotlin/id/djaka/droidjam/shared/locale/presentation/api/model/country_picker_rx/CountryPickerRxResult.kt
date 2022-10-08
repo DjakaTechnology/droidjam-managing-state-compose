@@ -1,6 +1,6 @@
-package id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant
+package id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx
 
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
 
 sealed class CountryPickerRxResult {
     class SearchBoxQueryChange(

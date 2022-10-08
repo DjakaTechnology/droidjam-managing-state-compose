@@ -1,8 +1,10 @@
-package id.djaka.droidjam.shared.locale.ui.country_picker_old
+package id.djaka.droidjam.shared.locale.app.presenter.country_picker_old
 
 import id.djaka.droidjam.shared.locale.app.domain.CountryCodeRepository
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_old.CountryPickerOldScreenState
+import id.djaka.droidjam.shared.locale.presentation.api.presenter.CountryPickerScreenAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -12,7 +14,7 @@ class CountryPickerPresenter constructor(
     private val countryCodeRepository: CountryCodeRepository,
     private val coroutineScope: CoroutineScope,
 ) : CountryPickerScreenAction {
-    val state = CountryPickerScreenState()
+    val state = CountryPickerOldScreenState()
 
     init {
         initInitialState()

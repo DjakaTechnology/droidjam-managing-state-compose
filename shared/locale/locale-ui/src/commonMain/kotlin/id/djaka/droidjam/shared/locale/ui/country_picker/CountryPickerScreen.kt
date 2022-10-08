@@ -45,10 +45,10 @@ import id.djaka.droidjam.shared.core_ui.theme.SpacingM
 import id.djaka.droidjam.shared.core_ui.theme.SpacingML
 import id.djaka.droidjam.shared.core_ui.theme.SpacingS
 import id.djaka.droidjam.shared.core_ui.theme.appSurfaceColorAtElevation
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
 import io.kamel.image.KamelImage
 import io.kamel.image.lazyPainterResource
 import io.ktor.http.Url

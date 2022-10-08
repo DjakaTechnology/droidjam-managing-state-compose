@@ -4,14 +4,14 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import id.djaka.droidjam.database.DroidJamDB
 import id.djaka.droidjam.shared.core.repository.PreferenceRepository
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
-import java.time.Instant
-import kotlinx.coroutines.delay
 
 class CountryCodeRepository(
     private val preferenceRepository: PreferenceRepository,
@@ -43,6 +43,6 @@ class CountryCodeRepository(
     }
 
     fun saveRecentCountryCode(region: String) {
-        droidJamDB.recentCountryCodeQueries.insert(region, Instant.now().toEpochMilli())
+        droidJamDB.recentCountryCodeQueries.insert(region, Clock.System.now().toEpochMilliseconds())
     }
 }

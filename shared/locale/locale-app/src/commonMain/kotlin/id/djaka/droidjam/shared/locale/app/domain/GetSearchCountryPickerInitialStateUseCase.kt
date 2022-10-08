@@ -1,6 +1,6 @@
 package id.djaka.droidjam.shared.locale.app.domain
 
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

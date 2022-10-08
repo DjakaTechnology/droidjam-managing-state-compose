@@ -1,8 +1,8 @@
-package id.djaka.droidjam.shared.locale.app.presenter.country_picker.item
+package id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item
 
 import id.djaka.droidjam.shared.core.util.Parcelable
 import id.djaka.droidjam.shared.core.util.Parcelize
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
 
 sealed class CountryPickerItem : Parcelable {
     @Parcelize

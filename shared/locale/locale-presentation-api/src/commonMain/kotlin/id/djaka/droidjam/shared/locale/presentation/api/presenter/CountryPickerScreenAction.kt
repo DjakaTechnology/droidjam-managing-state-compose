@@ -1,6 +1,6 @@
-package id.djaka.droidjam.shared.locale.ui.country_picker_old
+package id.djaka.droidjam.shared.locale.presentation.api.presenter
 
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
 
 interface CountryPickerScreenAction {
     fun onSearchBoxChanged(query: String)

@@ -24,7 +24,7 @@ kotlin {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
                 implementation(project(":shared:core-molecule"))
-                implementation(project(":shared:locale:locale-app"))
+                implementation(project(":shared:locale:locale-presentation-api"))
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)

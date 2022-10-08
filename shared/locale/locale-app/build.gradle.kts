@@ -7,6 +7,7 @@ plugins {
     id(BuildPlugins.serialization)
     id(BuildPlugins.kotlinParcelize)
     id(BuildPlugins.molecule)
+    id(BuildPlugins.mokoSwift)
 }
 
 kotlin {
@@ -21,7 +22,7 @@ kotlin {
         version = "1.0"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "local-app"
+            baseName = "SharedLocaleApp"
         }
     }
 
@@ -36,6 +37,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-molecule"))
+                implementation(project(":shared:locale:locale-presentation-api"))
                 implementation(compose.runtime)
                 implementation(Libraries.serialization)
                 implementation(Libraries.settings)
@@ -43,6 +45,7 @@ kotlin {
                 implementation(Libraries.settingsCoroutines)
                 implementation(Libraries.sqlDelightCoroutines)
                 implementation(Libraries.coroutinesCore)
+                implementation(Libraries.dateTime)
             }
         }
         val commonTest by getting {
@@ -73,4 +76,8 @@ android {
         minSdk = DroidJam.minSdk
         targetSdk = DroidJam.targetSdk
     }
+}
+
+kswift {
+    install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
 }

@@ -1,18 +1,15 @@
-package id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant
+package id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx
 
-import androidx.compose.runtime.Immutable
-import id.djaka.droidjam.shared.locale.app.model.CountryCodeModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerModel
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.item.CountryPickerItem
+import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
 
-@Immutable
 data class CountryPickerRxModel(
     val searchBox: String,
     val countryListState: CountryListState,
     val selectedCountry: CountryCodeModel? = null,
     val initialList: CountryListState
 ) {
-    @Immutable
     sealed class CountryListState {
         object Loading : CountryListState()
         data class Success(val countryCodes: List<CountryPickerItem>) : CountryListState()

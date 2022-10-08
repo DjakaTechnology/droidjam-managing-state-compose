@@ -6,14 +6,14 @@ Pod::Spec.new do |spec|
     spec.authors                  = ''
     spec.license                  = ''
     spec.summary                  = 'Some description for the Shared Module'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/core-ios.framework'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/Shared.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target = '14.1'
                 
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':shared:core-ios',
-        'PRODUCT_MODULE_NAME' => 'core-ios',
+        'PRODUCT_MODULE_NAME' => 'Shared',
     }
                 
     spec.script_phases = [

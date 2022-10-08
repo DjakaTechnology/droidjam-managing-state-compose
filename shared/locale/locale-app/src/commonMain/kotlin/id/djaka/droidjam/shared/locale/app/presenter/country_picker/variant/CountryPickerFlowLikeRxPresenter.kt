@@ -1,29 +1,22 @@
 package id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant
 
+import id.djaka.droidjam.shared.core.framework.Presenter
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.CountryPickerRxModel
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.CountryPickerRxResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.scan
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.*
 
 class CountryPickerFlowLikeRxPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-) {
+): Presenter<CountryPickerEvent, CountryPickerRxModel> {
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun presentFlow(
+    override fun present(
         coroutineScope: CoroutineScope,
         event: Flow<CountryPickerEvent>,
     ): StateFlow<CountryPickerRxModel> {

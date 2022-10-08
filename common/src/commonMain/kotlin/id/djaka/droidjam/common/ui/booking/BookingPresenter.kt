@@ -25,7 +25,7 @@ class BookingPresenter(
     private val priceBreakDownPresenter: PriceBreakDownPresenter,
 ) : MoleculePresenter<BookingPresenter.Event, BookingPresenter.Model> {
     @Composable
-    override fun presentComposable(event: Flow<Event>): Model {
+    override fun present(event: Flow<Event>): Model {
         val coroutineScope = rememberCoroutineScope()
 
         val (addonEvent, addonState) = addonPresenter.rememberLaunchPresenter()

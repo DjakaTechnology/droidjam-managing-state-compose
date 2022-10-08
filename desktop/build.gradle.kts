@@ -24,6 +24,8 @@ kotlin {
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
                 implementation(project(":shared:locale:locale-ui"))
+                implementation(project(":shared:locale:locale-presentation-api"))
+                implementation(project(":shared:locale:locale-app"))
                 implementation(compose.desktop.currentOs)
             }
         }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 class BookingInfoPresenter : MoleculePresenter<BookingInfoPresenter.Event, BookingInfoPresenter.Model> {
     @Composable
-    override fun presentComposable(event: Flow<Event>): Model {
+    override fun present(event: Flow<Event>): Model {
         return Model(
             "SG",
             "Djaka Pradana",

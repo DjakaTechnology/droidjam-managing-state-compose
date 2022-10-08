@@ -11,7 +11,7 @@ class AddonPresenter constructor(
     private val getAddOnSelectorUseCase: GetAddOnSelectorUseCase,
 ) : MoleculePresenter<AddonPresenter.Event, AddonPresenter.Model> {
     @Composable
-    override fun presentComposable(event: Flow<Event>): Model {
+    override fun present(event: Flow<Event>): Model {
         var itemState: Model.ItemState by remember { mutableStateOf(Model.ItemState.Loading) }
         val items = remember { mutableStateListOf<AddonSelectorModel>() }
 

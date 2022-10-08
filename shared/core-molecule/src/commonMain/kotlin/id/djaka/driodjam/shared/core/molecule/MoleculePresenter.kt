@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface MoleculePresenter<E, T> : Presenter<E, T> {
     @Composable
-    fun presentComposable(event: Flow<E>): T
+    fun present(event: Flow<E>): T
 
     override fun present(coroutineScope: CoroutineScope, event: Flow<E>): StateFlow<T> {
         return coroutineScope.launchMolecule(RecompositionClock.Immediate) {
-            presentComposable(event)
+            present(event)
         }
     }
 }

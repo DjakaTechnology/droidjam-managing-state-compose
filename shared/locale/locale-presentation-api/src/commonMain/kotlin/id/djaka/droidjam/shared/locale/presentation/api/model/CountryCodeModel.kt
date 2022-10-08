@@ -1,4 +1,4 @@
-package id.djaka.droidjam.shared.locale.app.model
+package id.djaka.droidjam.shared.locale.presentation.api.model
 
 import id.djaka.droidjam.shared.core.util.Parcelable
 import id.djaka.droidjam.shared.core.util.Parcelize

@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    id(BuildPlugins.mokoSwift)
 }
 
 kotlin {
@@ -14,7 +15,11 @@ kotlin {
         version = "1.0"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "core-ios"
+            baseName = "Shared"
+            isStatic = false
+            transitiveExport = true
+            linkerOpts("-lsqlite3")
+            export(project(":shared:locale:locale-presentation-api"))
         }
     }
     
@@ -22,6 +27,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
+                api(project(":shared:locale:locale-presentation-api"))
+                implementation(project(":shared:locale:locale-app")) //TODO: Find a way to remomve this
+
+                implementation(Libraries.coroutinesCore)
             }
         }
         val commonTest by getting {
@@ -47,5 +56,17 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+}
+
+kswift {
+    install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature) {
+        filter = excludeFilter(
+            "ClassContext/org.jetbrains.compose.runtime:runtime/androidx/compose/runtime/snapshots/Snapshot",
+            "ClassContext/com.squareup.sqldelight:native-driver/com/squareup/sqldelight/drivers/native/ConnectionWrapper",
+            "ClassContext/org.jetbrains.kotlinx:kotlinx-datetime/kotlinx/datetime/DateTimePeriod",
+            "ClassContext/org.jetbrains.kotlinx:kotlinx-serialization-core/kotlinx/serialization/descriptors/PolymorphicKind",
+            "ClassContext/org.jetbrains.kotlinx:kotlinx-serialization-json/kotlinx/serialization/json/Json"
+        )
     }
 }

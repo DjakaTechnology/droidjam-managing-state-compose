@@ -32,6 +32,8 @@ object Versions {
     const val molecule = "0.5.0-beta01"
     const val turbine = "0.11.0"
     const val mockk = "1.13.2"
+
+    const val kmpNativeCoroutines = "0.13.1"
 }
 
 object Libraries {
@@ -65,6 +67,9 @@ object Libraries {
 
     // RxJava
     const val rxJava = "io.reactivex.rxjava3:rxjava:3.1.5"
+
+    // DateTime
+    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
 
 object TestLibraries {
@@ -77,6 +82,7 @@ object BuildClassPath {
     const val kotlinSerializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     const val sqlDelightPlugin = "com.squareup.sqldelight:gradle-plugin:1.5.3"
     const val moleculePlugin = "app.cash.molecule:molecule-gradle-plugin:${Versions.molecule}"
+    const val mokoSwift = "dev.icerock.moko:kswift-gradle-plugin:0.6.0"
 }
 
 object BuildPlugins {
@@ -85,4 +91,6 @@ object BuildPlugins {
     const val kotlinParcelize = "kotlin-parcelize"
     const val jetbrainCompose = "org.jetbrains.compose"
     const val serialization = "kotlinx-serialization"
+    const val kmpNativeCoroutines = "com.rickclephas.kmp.nativecoroutines"
+    const val mokoSwift = "dev.icerock.moko.kswift"
 }

@@ -11,18 +11,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class PreferenceRepository {
-//    private val setting = Settings() as ObservableSettings
-//
-//    var colorMode by setting.string(COLOR_MODE, Constant.ThemeMode.AUTO.value)
-//    val getColorModeFlow get() = setting.getStringFlow(COLOR_MODE, Constant.ThemeMode.AUTO.value)
-//
-//    var isUseDynamicColor by setting.boolean(IS_USE_DYNAMIC_COLOR, true)
-//    val getDynamicColorFlow = setting.getBooleanFlow(IS_USE_DYNAMIC_COLOR, true)
-//
-//    var defaultCountry by setting.nullableString(DEFAULT_COUNTRY)
-//    val getDefaultCountryFlow = setting.getStringOrNullFlow(DEFAULT_COUNTRY)
+    private val setting = Settings() as ObservableSettings
 
-    val getDefaultCountryFlow = MutableStateFlow("ID") // Mock for Default preference setting
+    var colorMode by setting.string(COLOR_MODE, Constant.ThemeMode.AUTO.value)
+    val getColorModeFlow get() = setting.getStringFlow(COLOR_MODE, Constant.ThemeMode.AUTO.value)
+
+    var isUseDynamicColor by setting.boolean(IS_USE_DYNAMIC_COLOR, true)
+    val getDynamicColorFlow = setting.getBooleanFlow(IS_USE_DYNAMIC_COLOR, true)
+
+    var defaultCountry by setting.nullableString(DEFAULT_COUNTRY)
+    val getDefaultCountryFlow = setting.getStringOrNullFlow(DEFAULT_COUNTRY)
+
+//    val getDefaultCountryFlow = MutableStateFlow("ID") // Mock for Default preference setting
 
     companion object {
         const val COLOR_MODE = "pref.colorMode"

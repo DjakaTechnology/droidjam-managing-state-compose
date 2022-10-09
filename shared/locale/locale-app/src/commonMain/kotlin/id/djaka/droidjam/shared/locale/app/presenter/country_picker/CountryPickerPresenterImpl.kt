@@ -57,10 +57,12 @@ class CountryPickerPresenterImpl(
         var result: CountryPickerModel.CountryListState by remember { mutableStateOf(CountryPickerModel.CountryListState.Loading) }
 
         if (query.isEmpty()) {
-            result = if (initialState.isEmpty()) {
-                CountryPickerModel.CountryListState.Loading
-            } else {
-                CountryPickerModel.CountryListState.Success(initialState)
+            LaunchedEffect(initialState) {
+                result = if (initialState.isEmpty()) {
+                    CountryPickerModel.CountryListState.Loading
+                } else {
+                    CountryPickerModel.CountryListState.Success(initialState)
+                }
             }
         } else {
             LaunchedEffect(query) {

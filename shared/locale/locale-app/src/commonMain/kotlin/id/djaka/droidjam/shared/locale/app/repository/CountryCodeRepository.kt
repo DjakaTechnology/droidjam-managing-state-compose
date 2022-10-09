@@ -1,4 +1,4 @@
-package id.djaka.droidjam.shared.locale.app.domain
+package id.djaka.droidjam.shared.locale.app.repository
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

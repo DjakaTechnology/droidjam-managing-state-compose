@@ -1,6 +1,6 @@
 package id.djaka.droidjam.shared.locale.app.presenter.country_picker_old
 
-import id.djaka.droidjam.shared.locale.app.domain.CountryCodeRepository
+import id.djaka.droidjam.shared.locale.app.repository.CountryCodeRepository
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
 import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_old.CountryPickerOldScreenState
@@ -58,6 +58,7 @@ class CountryPickerPresenter constructor(
         coroutineScope.launch {
             countryCodeRepository.saveRecentCountryCode(item.code)
             state.selectedCountry.value = item
+            loadSearch("")
         }
     }
 }

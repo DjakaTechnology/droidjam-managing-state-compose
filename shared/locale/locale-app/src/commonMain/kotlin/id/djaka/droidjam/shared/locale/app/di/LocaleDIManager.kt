@@ -3,7 +3,7 @@ package id.djaka.droidjam.shared.locale.app.di
 import id.djaka.droidjam.shared.core.di.CoreComponent
 import id.djaka.droidjam.shared.core.di.CoreDIManager
 import id.djaka.droidjam.shared.core.framework.Presenter
-import id.djaka.droidjam.shared.locale.app.domain.CountryCodeRepository
+import id.djaka.droidjam.shared.locale.app.repository.CountryCodeRepository
 import id.djaka.droidjam.shared.locale.app.domain.CountryPickerConverter
 import id.djaka.droidjam.shared.locale.app.domain.GetSearchCountryPickerInitialStateUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
@@ -15,7 +15,6 @@ import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.Coun
 import id.djaka.droidjam.shared.locale.presentation.api.LocalePresenterProvider
 import id.djaka.droidjam.shared.locale.presentation.api.di.LocalePresentationApiDIManager
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
-import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.CountryPickerRxModel
 import id.djaka.droidjam.shared.locale.presentation.api.presenter.CountryPickerPresenter
 

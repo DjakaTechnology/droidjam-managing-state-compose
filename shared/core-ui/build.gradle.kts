@@ -62,6 +62,7 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(Libraries.sqlDelightJSDriver)
+                implementation(Libraries.kamelImageJs)
             }
         }
     }

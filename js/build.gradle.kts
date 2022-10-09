@@ -3,8 +3,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
     id(BuildPlugins.sqlDelight)
+    id(BuildPlugins.jetbrainCompose)
 }
 
 group = "id.djaka"
@@ -38,6 +38,7 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(Libraries.sqlDelightJSDriver)
+                implementation(Libraries.kamelImageJs)
                 implementation(npm("sql.js", "1.7.0"))
 
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))

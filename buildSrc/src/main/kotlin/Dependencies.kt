@@ -61,7 +61,7 @@ object Libraries {
 
     // Image Loader
     const val kamelImage = "com.alialbaali.kamel:kamel-image:${Versions.kamelImage}"
-//    const val kamelImage = "io.github.luca992.com.alialbaali.kamel:kamel-image:0.5-darwinandjs0"
+    const val kamelImageJs = "io.github.luca992.com.alialbaali.kamel:kamel-image:0.5-darwinandjs0"
 
     // Ktor
     const val ktorClientCore = "io.ktor:ktor-client-core:${Versions.ktor}"

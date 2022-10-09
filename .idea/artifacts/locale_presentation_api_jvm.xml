@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="locale-presentation-api-jvm">
+    <output-path>$PROJECT_DIR$/shared/locale/locale-presentation-api/build/libs</output-path>
+    <root id="archive" name="locale-presentation-api-jvm.jar" />
+  </artifact>
+</component>

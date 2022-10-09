@@ -56,7 +56,9 @@ class CountryPickerRxPresenter(
             }
 
             is CountryPickerRxResult.SearchStateChange -> {
-                state.copy(countryListState = result.state)
+                if (state.searchBox.isNotEmpty()) {
+                    state.copy(countryListState = result.state)
+                } else state
             }
 
             is CountryPickerRxResult.InitialStateLoad -> {
@@ -85,6 +87,7 @@ class CountryPickerRxPresenter(
                     CountryPickerRxModel.CountryListState.Success(result)
                 }
             }.startWith(Observable.just(CountryPickerRxModel.CountryListState.Loading))
+            .delaySubscription(200, TimeUnit.MILLISECONDS)
 }
 
 fun SearchCountryCodeFilterUseCase.invokeRx(query: String): Observable<List<CountryPickerItem.Picker>> =

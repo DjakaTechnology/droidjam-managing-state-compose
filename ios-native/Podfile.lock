@@ -1,5 +1,5 @@
 PODS:
-  - core_ios (1.0)
+  - ios (1.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -8,7 +8,7 @@ PODS:
   - RxSwift (6.5.0)
 
 DEPENDENCIES:
-  - core_ios (from `../shared/core-ios`)
+  - ios (from `../ios`)
   - RxCocoa (= 6.5.0)
   - RxSwift (= 6.5.0)
 
@@ -19,15 +19,15 @@ SPEC REPOS:
     - RxSwift
 
 EXTERNAL SOURCES:
-  core_ios:
-    :path: "../shared/core-ios"
+  ios:
+    :path: "../ios"
 
 SPEC CHECKSUMS:
-  core_ios: 8de94237f2c56f1352613c67716b93b73dda273a
+  ios: 137411c69e05af4426428e2020be68108928f10a
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
 
-PODFILE CHECKSUM: 243d24d5841bd2928fa42adb9b838b71e2d21cd4
+PODFILE CHECKSUM: 3123a1f7120b70a8535dc37b85882d7aed86d84b
 
 COCOAPODS: 1.11.3

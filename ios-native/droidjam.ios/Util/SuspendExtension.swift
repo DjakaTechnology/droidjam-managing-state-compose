@@ -25,6 +25,24 @@ func createObservable<T>(
     }
 }
 
+func createSingle<T>(
+    scope: CoroutineScope,
+    suspendWrapper: SuspendedWrapper<T>
+) -> Single<T> {
+    return Single<T>.create { single in
+        let job: Job = suspendWrapper.subscribe(
+            scope: scope,
+            onSuccess: { item in single(.success(item!)) },
+            onThrow: { error in
+                // TODO: Figure out why it doesn't compile
+//                error in single(.error(KotlinError(error)))
+                
+            }
+        )
+        return Disposables.create { job.cancel(cause: nil) }
+    }
+}
+
 class KotlinError: LocalizedError {
     let throwable: KotlinThrowable
     init(_ throwable: KotlinThrowable) {

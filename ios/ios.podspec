@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'core_ios'
+    spec.name                     = 'ios'
     spec.version                  = '1.0'
     spec.homepage                 = 'Link to the Shared Module homepage'
     spec.source                   = { :http=> ''}
@@ -12,13 +12,13 @@ Pod::Spec.new do |spec|
                 
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':shared:core-ios',
+        'KOTLIN_PROJECT_PATH' => ':ios',
         'PRODUCT_MODULE_NAME' => 'Shared',
     }
                 
     spec.script_phases = [
         {
-            :name => 'Build core_ios',
+            :name => 'Build ios',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
                 fi
                 set -ev
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
-                "$REPO_ROOT/../../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
+                "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" $KOTLIN_PROJECT_PATH:syncFramework \
                     -Pkotlin.native.cocoapods.platform=$PLATFORM_NAME \
                     -Pkotlin.native.cocoapods.archs="$ARCHS" \
                     -Pkotlin.native.cocoapods.configuration="$CONFIGURATION"

@@ -8,7 +8,7 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'droidjam.ios' do
 
   # Pods for droidjam.ios
-  pod 'core_ios', :path => '../shared/core-ios'
+  pod 'ios', :path => '../ios'
 #   pod 'core_iosSwift', :path => '../shared/core-ios'
   pod 'RxSwift', '6.5.0'
   pod 'RxCocoa', '6.5.0'

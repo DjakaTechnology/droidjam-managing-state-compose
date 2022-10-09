@@ -19,10 +19,9 @@ pluginManagement {
 
 rootProject.name = "droidjam"
 
-include(":android", ":desktop", ":shared:core-app")
+include(":android", ":desktop", ":shared:core-app", ":js", ":ios")
 
 include(":shared:core")
-include(":shared:core-ios")
 include(":shared:core-ui")
 include(":shared:core-molecule")
 
@@ -33,5 +32,3 @@ include(":shared:locale:locale-presentation-api")
 include(":shared:booking:booking-ui")
 include(":shared:booking:booking-presentation-api")
 include(":shared:booking:booking-app")
-
-include(":js")

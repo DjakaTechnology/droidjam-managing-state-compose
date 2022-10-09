@@ -17,8 +17,6 @@ extension ContentView {
     
     
         init() {
-            SharedModule.shared.doInit()
-            
             state = CountryPickerModel.companion.empty()
             presenter = PresenterWrapper(
                 presenter: SharedModule.Locale.shared.getPresenterProvider().provideCountryPickerPresenter()
@@ -28,6 +26,10 @@ extension ContentView {
                 .subscribe { item in
                     self.state = item
                 }.disposed(by: self.disposeBag)
+        }
+        
+        private func onInitialized() {
+            
         }
         
         func event(event: CountryPickerEvent) {

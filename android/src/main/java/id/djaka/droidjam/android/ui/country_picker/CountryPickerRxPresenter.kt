@@ -77,7 +77,6 @@ class CountryPickerRxPresenter(
 
     private fun filterCountry(query: String) =
         Observable.just(query)
-            .delay(200, TimeUnit.MILLISECONDS)
             .filter { it.isNotEmpty() }
             .switchMap { searchCountryUseCases.searchCountryCodeFilter.invokeRx(query) }
             .map { result ->

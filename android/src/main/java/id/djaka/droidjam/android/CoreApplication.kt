@@ -1,6 +1,7 @@
 package id.djaka.droidjam.android
 
 import android.app.Application
+import id.djaka.droidjam.common.CoreApp
 import id.djaka.droidjam.shared.core.di.AndroidComponent
 import id.djaka.droidjam.shared.core.di.CoreAndroidDIManager
 import id.djaka.droidjam.shared.core.di.CoreDIManager
@@ -14,8 +15,7 @@ class CoreApplication : Application() {
 
         MainScope().launch {
             CoreAndroidDIManager.appComponent = AndroidComponent(this@CoreApplication)
-            CoreDIManager.init()
-            LocaleDIManager.init()
+            CoreApp.init()
         }
     }
 }

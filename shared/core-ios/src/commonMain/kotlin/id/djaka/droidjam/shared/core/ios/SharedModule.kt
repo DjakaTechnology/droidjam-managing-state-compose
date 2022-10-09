@@ -1,5 +1,6 @@
 package id.djaka.droidjam.shared.core.ios
 
+import id.djaka.droidjam.database.DroidJamDB
 import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
 import id.djaka.droidjam.shared.locale.presentation.api.di.LocalePresentationApiDIManager
 
@@ -9,7 +10,7 @@ object SharedModule {
 
     fun init() {
         if (!isInitialized) {
-            LocaleDIManager.init()
+
             isInitialized = true
         }
     }

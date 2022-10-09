@@ -27,8 +27,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":shared:core"))
+                implementation(project(":shared:core-app"))
                 api(project(":shared:locale:locale-presentation-api"))
-                implementation(project(":shared:locale:locale-app")) //TODO: Find a way to remomve this
 
                 implementation(Libraries.coroutinesCore)
             }

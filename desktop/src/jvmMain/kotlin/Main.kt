@@ -2,10 +2,9 @@
 import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import id.djaka.droidjam.common.CoreApp
+import id.djaka.droidjam.shared.booking.ui.BookingScreen
 import id.djaka.droidjam.shared.core_ui.App
-import id.djaka.droidjam.shared.core.di.CoreDIManager
-import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
-import id.djaka.droidjam.shared.locale.ui.country_picker.CountryPickerScreen
 
 
 fun main() = application {
@@ -13,15 +12,15 @@ fun main() = application {
         var isInitialized by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
-            CoreDIManager.init()
-            LocaleDIManager.init()
+            CoreApp.init()
 
             isInitialized = true
         }
 
         if (isInitialized) {
             App {
-                CountryPickerScreen()
+//                CountryPickerScreen()
+                BookingScreen()
             }
         }
     }

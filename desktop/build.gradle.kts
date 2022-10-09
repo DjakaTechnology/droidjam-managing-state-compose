@@ -20,12 +20,13 @@ kotlin {
     sourceSets {
         val jvmMain by getting {
             dependencies {
-                implementation(project(":common"))
+                implementation(project(":shared:core-app"))
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
                 implementation(project(":shared:locale:locale-ui"))
                 implementation(project(":shared:locale:locale-presentation-api"))
-                implementation(project(":shared:locale:locale-app"))
+                implementation(project(":shared:booking:booking-ui"))
+                implementation(project(":shared:booking:booking-presentation-api"))
                 implementation(compose.desktop.currentOs)
             }
         }

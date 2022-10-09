@@ -71,7 +71,7 @@ class CalculatePriceBreakDownUseCase(
             items = items,
             discount = discount,
             totalSellingPrice = totalPrice - (discount.sumOf { it.sellingPrice }),
-            totalStrikethroughPrice = totalPrice
+            totalStrikethroughPrice = totalPrice.takeIf { discount.isNotEmpty() }
         )
     }
 }

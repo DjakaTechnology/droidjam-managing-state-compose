@@ -52,10 +52,10 @@ class BookingPresenterImpl(
         LaunchedEffect(couponState, addonState, bookingInfoState, priceState) {
             event.collect {
                 when (it) {
-                    is BookingEvent.AddonEvent -> addonEvent.emit(it.event)
-                    is BookingEvent.BookingInfoEvent -> bookingInfoEvent.emit(it.event)
-                    is BookingEvent.CouponEvent -> couponEvent.emit(it.event)
-                    is BookingEvent.PriceBreakdownEvent -> priceEvent.emit(it.event)
+                    is BookingEvent.SendAddonEvent -> addonEvent.emit(it.event)
+                    is BookingEvent.SendBookingInfoEvent -> bookingInfoEvent.emit(it.event)
+                    is BookingEvent.SendCouponEvent -> couponEvent.emit(it.event)
+                    is BookingEvent.SendPriceBreakdownEvent -> priceEvent.emit(it.event)
 
                     is BookingEvent.Submit -> coroutineScope.launch {
                         submitResult = BookingModel.SubmitResult.Submitting

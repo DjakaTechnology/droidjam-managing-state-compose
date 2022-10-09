@@ -86,7 +86,7 @@ fun BookingScreen(state: BookingModel, action: (BookingEvent) -> Unit) {
 
         AddonWidget(
             modifier = Modifier.padding(horizontal = SpacingM).fillMaxWidth(),
-            state = state.addonState, action = { action(BookingEvent.AddonEvent(it)) })
+            state = state.addonState, action = { action(BookingEvent.SendAddonEvent(it)) })
         SpacerVertical(SpacingM)
 
         CouponWidget(
@@ -94,7 +94,7 @@ fun BookingScreen(state: BookingModel, action: (BookingEvent) -> Unit) {
                 .padding(horizontal = SpacingM)
                 .fillMaxWidth(),
             state = state.couponInfoState,
-            action = { action(BookingEvent.CouponEvent(it)) }
+            action = { action(BookingEvent.SendCouponEvent(it)) }
         )
         SpacerVertical(SpacingM)
 
@@ -103,7 +103,7 @@ fun BookingScreen(state: BookingModel, action: (BookingEvent) -> Unit) {
                 .padding(horizontal = SpacingM)
                 .fillMaxWidth(),
             state = state.priceBreakDownState,
-            action = { action(BookingEvent.PriceBreakdownEvent(it)) }
+            action = { action(BookingEvent.SendPriceBreakdownEvent(it)) }
         )
 
         SpacerVertical(SpacingM)

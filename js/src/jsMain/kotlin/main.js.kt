@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
+import id.djaka.droidjam.common.CoreApp
 import id.djaka.droidjam.shared.core.di.CoreDIManager
 import id.djaka.droidjam.shared.core_ui.App
 import id.djaka.droidjam.shared.locale.app.di.LocaleDIManager
@@ -16,8 +17,7 @@ fun main() {
             var isInitialized by remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                CoreDIManager.init()
-                LocaleDIManager.init()
+                CoreApp.init()
 
                 isInitialized = true
             }

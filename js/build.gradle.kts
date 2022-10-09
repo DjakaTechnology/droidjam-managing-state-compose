@@ -16,14 +16,17 @@ kotlin {
         browser()
         binaries.executable()
     }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":shared:core-app"))
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
                 implementation(project(":shared:locale:locale-presentation-api"))
                 implementation(project(":shared:locale:locale-ui"))
-                implementation(project(":shared:locale:locale-app"))
+                implementation(project(":shared:booking:booking-presentation-api"))
+                implementation(project(":shared:booking:booking-ui"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material)

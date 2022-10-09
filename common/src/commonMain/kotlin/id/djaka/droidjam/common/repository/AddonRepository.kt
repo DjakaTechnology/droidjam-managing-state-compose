@@ -1,13 +1,17 @@
 package id.djaka.droidjam.common.repository
 
 import id.djaka.droidjam.common.model.AddonModel
+import id.djaka.droidjam.shared.core.framework.dispatcher.CoroutineDispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class AddonRepository {
+class AddonRepository(
+    private val dispatcher: CoroutineDispatchers
+) {
     suspend fun getList(): List<AddonModel> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher.io()) {
             delay(1000) // Pretend API call
             listOf(
                 AddonModel(

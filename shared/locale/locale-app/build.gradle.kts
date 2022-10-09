@@ -8,6 +8,7 @@ plugins {
     id(BuildPlugins.kotlinParcelize)
     id(BuildPlugins.molecule)
     id(BuildPlugins.mokoSwift)
+    id(BuildPlugins.jetbrainCompose)
 }
 
 kotlin {
@@ -26,11 +27,17 @@ kotlin {
         }
     }
 
-    jvm("desktop") {
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
+
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
 
     sourceSets {
         val commonMain by getting {
@@ -59,11 +66,16 @@ kotlin {
             }
         }
         val androidTest by getting
-        val desktopMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
                 implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightJvmDriver)
+            }
+        }
+        val jsMain by getting {
+            dependencies {
+                implementation(Libraries.sqlDelightJSDriver)
             }
         }
     }
@@ -80,4 +92,24 @@ android {
 
 kswift {
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
+}
+
+compose.experimental {
+    web.application {}
+}
+
+// a temporary workaround for a bug in jsRun invocation - see https://youtrack.jetbrains.com/issue/KT-48273
+afterEvaluate {
+    rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
+        versions.webpackDevServer.version = "4.0.0"
+        versions.webpackCli.version = "4.9.0"
+        nodeVersion = "16.0.0"
+    }
+}
+
+// TODO: remove when https://youtrack.jetbrains.com/issue/KT-50778 fixed
+project.tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile::class.java).configureEach {
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-Xir-dce-runtime-diagnostic=log"
+    )
 }

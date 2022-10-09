@@ -1,9 +1,9 @@
 package id.djaka.droidjam.common
 
 actual fun getPlatformName(): String {
-    return "Desktop"
+    return "JS"
 }
 
 actual fun getPlatform(): Platform {
-    return Platform.DESKTOP
+    return Platform.JS
 }

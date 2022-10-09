@@ -6,11 +6,11 @@ import id.djaka.droidjam.database.DroidJamDB
 import id.djaka.droidjam.shared.core.util.DriverFactory
 
 actual class DriverFactory {
-    actual fun createDriver(): SqlDriver {
+    actual suspend fun createDriver(): SqlDriver {
         return NativeSqliteDriver(DroidJamDB.Schema, "droidjam.db")
     }
 }
 
 actual fun createDBDriver(): DriverFactory {
-    return id.djaka.droidjam.shared.core.util.DriverFactory()
+    return DriverFactory()
 }

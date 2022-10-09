@@ -6,7 +6,7 @@ import id.djaka.droidjam.database.DroidJamDB
 import id.djaka.droidjam.shared.core.util.DriverFactory
 
 actual class DriverFactory {
-    actual fun createDriver(): SqlDriver {
+    actual suspend fun createDriver(): SqlDriver {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
         DroidJamDB.Schema.create(driver)
         return driver
@@ -14,5 +14,5 @@ actual class DriverFactory {
 }
 
 actual fun createDBDriver(): DriverFactory {
-    return id.djaka.droidjam.shared.core.util.DriverFactory()
+    return DriverFactory()
 }

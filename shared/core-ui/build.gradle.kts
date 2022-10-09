@@ -2,19 +2,26 @@ import org.jetbrains.compose.compose
 
 plugins {
     kotlin("multiplatform")
-    id(BuildPlugins.molecule)
     id("com.android.library")
+    id(BuildPlugins.molecule)
+    id(BuildPlugins.jetbrainCompose)
 }
 
 kotlin {
     android()
 
-    jvm("desktop") {
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
-    
+
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -43,12 +50,24 @@ kotlin {
             }
         }
         val androidTest by getting
-        val desktopMain by getting {
+
+        val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
             }
         }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(compose.web.core)
+                implementation(Libraries.sqlDelightJSDriver)
+            }
+        }
     }
+}
+
+compose.experimental {
+    web.application {}
 }
 
 android {

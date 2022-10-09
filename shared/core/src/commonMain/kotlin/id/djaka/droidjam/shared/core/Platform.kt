@@ -8,7 +8,8 @@ interface Platform {
 enum class PlatformType {
     ANDROID,
     IOS,
-    DESKTOP
+    DESKTOP,
+    JS
 }
 
 expect fun getPlatform(): Platform

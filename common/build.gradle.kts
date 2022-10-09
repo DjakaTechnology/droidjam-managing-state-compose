@@ -3,7 +3,7 @@ import org.jetbrains.compose.compose
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("dev.icerock.mobile.multiplatform-resources")
+//    id("dev.icerock.mobile.multiplatform-resources")
     id(BuildPlugins.serialization)
     id(BuildPlugins.sqlDelight)
     id(BuildPlugins.molecule)
@@ -16,9 +16,9 @@ version = "1.0-SNAPSHOT"
 
 kotlin {
     android()
-    jvm("desktop") {
+    jvm("jvm") {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
     js(IR) {
@@ -39,7 +39,7 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.material3)
                 implementation(Libraries.serialization)
-                implementation("dev.icerock.moko:resources:0.20.1")
+//                implementation("dev.icerock.moko:resources:0.20.1")
                 implementation(Libraries.settings)
                 implementation(Libraries.settingsNoArgs)
                 implementation(Libraries.settingsCoroutines)
@@ -48,10 +48,6 @@ kotlin {
                 implementation(Libraries.ktorClientCore)
                 implementation(Libraries.coroutinesCore)
             }
-        }
-
-        commonTest {
-
         }
 
         val androidMain by getting {
@@ -68,7 +64,7 @@ kotlin {
                 implementation("junit:junit:4.13")
             }
         }
-        val desktopMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
                 implementation("dev.icerock.moko:resources-compose:0.20.1")
@@ -76,12 +72,18 @@ kotlin {
                 implementation(Libraries.ktorClientCIO)
             }
         }
-        val desktopTest by getting {
+        val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(TestLibraries.turbine)
                 implementation(TestLibraries.coroutines)
                 implementation(TestLibraries.mockk)
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(Libraries.sqlDelightJSDriver)
             }
         }
     }
@@ -116,8 +118,8 @@ android {
     }
 }
 
-multiplatformResources {
-    multiplatformResourcesPackage = "id.djaka.droidjam" // required
-//    multiplatformResourcesVisibility = MRVisibility.Internal // optional, default Public
-    iosBaseLocalizationRegion = "en" // optional, default "en"
-}
+//multiplatformResources {
+//    multiplatformResourcesPackage = "id.djaka.droidjam" // required
+////    multiplatformResourcesVisibility = MRVisibility.Internal // optional, default Public
+//    iosBaseLocalizationRegion = "en" // optional, default "en"
+//}

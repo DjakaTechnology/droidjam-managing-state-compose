@@ -6,5 +6,6 @@ expect fun getPlatform(): Platform
 
 enum class Platform {
     ANDROID,
-    DESKTOP
+    DESKTOP,
+    JS
 }

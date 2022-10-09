@@ -3,7 +3,7 @@ object DroidJam {
     const val targetSdk = 33
     const val compileSdk = 33
     const val applicationId = "id.djaka.droidjam"
-    const val desktopKotlinJvmTarget = "11"
+    const val jvmTarget = "11"
 
     // Version
     const val versionName = "1.0-SNAPSHOT"
@@ -25,7 +25,7 @@ object Versions {
 
     const val sqlDelight = "1.5.4"
 
-    const val settings = "1.0.0-alpha01"
+    const val settings = "1.0.0-RC"
     const val kamelImage = "0.4.1"
     const val ktor = "2.1.1"
 
@@ -52,6 +52,7 @@ object Libraries {
     const val sqlDelightJvmDriver = "com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}"
     const val sqlDelightAndroidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
     const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+    const val sqlDelightJSDriver = "com.squareup.sqldelight:sqljs-driver:${Versions.sqlDelight}"
 
     // Settings
     const val settings = "com.russhwolf:multiplatform-settings:${Versions.settings}"
@@ -59,7 +60,8 @@ object Libraries {
     const val settingsCoroutines= "com.russhwolf:multiplatform-settings-coroutines:${Versions.settings}"
 
     // Image Loader
-    const val kamelImage = "com.alialbaali.kamel:kamel-image:${Versions.kamelImage}"
+//    const val kamelImage = "com.alialbaali.kamel:kamel-image:${Versions.kamelImage}"
+    const val kamelImage = "io.github.luca992.com.alialbaali.kamel:kamel-image:0.5-darwinandjs0"
 
     // Ktor
     const val ktorClientCore = "io.ktor:ktor-client-core:${Versions.ktor}"

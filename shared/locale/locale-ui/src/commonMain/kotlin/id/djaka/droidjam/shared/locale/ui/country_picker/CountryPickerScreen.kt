@@ -196,7 +196,7 @@ private fun CountryItem(
 
 @Composable
 private fun CountryFlag(item: CountryPickerItem.Picker) {
-    if (getPlatform().platformType == PlatformType.DESKTOP) {
+    if (getPlatform().platformType == PlatformType.DESKTOP || getPlatform().platformType == PlatformType.JS) {
         KamelImage(
             resource = lazyPainterResource(data = Url(item.item.image)),
             contentDescription = "flag",

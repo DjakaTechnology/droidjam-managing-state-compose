@@ -1,5 +1,3 @@
-import org.jetbrains.compose.compose
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -15,9 +13,9 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    jvm("desktop") {
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
 
@@ -30,7 +28,13 @@ kotlin {
             baseName = "core"
         }
     }
-    
+
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -78,9 +82,15 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
 
-        val desktopMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation(Libraries.sqlDelightJvmDriver)
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(Libraries.sqlDelightJSDriver)
             }
         }
     }

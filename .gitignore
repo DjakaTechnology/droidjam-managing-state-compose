@@ -237,3 +237,11 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,cocoapods,swift
+
+.idea/
+obj/
+log/
+logs/
+*.keystore
+*cruise-output*
+web/

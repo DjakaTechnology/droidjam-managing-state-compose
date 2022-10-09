@@ -23,7 +23,7 @@ class SubComponent(appComponent: CoreComponent) {
     val coroutineDispatchers = appComponent.coroutineDispatchers
 
     val addonRepository by lazy {
-        AddonRepository()
+        AddonRepository(coroutineDispatchers)
     }
 
     val getAddOnSelectorUseCase by lazy {

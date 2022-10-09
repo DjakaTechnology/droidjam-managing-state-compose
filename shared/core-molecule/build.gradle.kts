@@ -5,6 +5,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id(BuildPlugins.molecule)
+    id(BuildPlugins.jetbrainCompose)
 }
 
 kotlin {
@@ -12,9 +13,9 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    jvm("desktop") {
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
 
@@ -27,7 +28,13 @@ kotlin {
             baseName = "core-molecule"
         }
     }
-    
+
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -61,6 +68,11 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+        val jsMain by getting {
+            dependencies {
+                implementation(compose.web.core)
+            }
+        }
     }
 }
 
@@ -71,4 +83,8 @@ android {
         minSdk = DroidJam.minSdk
         targetSdk = DroidJam.targetSdk
     }
+}
+
+compose.experimental {
+    web.application {}
 }

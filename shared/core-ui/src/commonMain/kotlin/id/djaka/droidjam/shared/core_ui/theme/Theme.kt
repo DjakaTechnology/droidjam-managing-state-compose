@@ -2,6 +2,11 @@ package id.djaka.droidjam.shared.core_ui.theme
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
@@ -10,6 +15,7 @@ import id.djaka.droidjam.shared.core_ui.util.isSupportDynamicColor
 import id.djaka.droidjam.shared.core_ui.util.isUseDarkMode
 import id.djaka.droidjam.shared.core_ui.util.isUseDynamicColor
 import kotlin.math.ln
+import kotlin.text.Typography
 
 fun ColorScheme.appSurfaceColorAtElevation(
     elevation: Dp,
@@ -96,10 +102,16 @@ fun CoreTheme(
         else -> LightColors
     }
 
+    val defaultTypography = MaterialTheme.typography
+    var typography by remember { mutableStateOf(defaultTypography) }
+    LaunchedEffect(Unit) {
+        typography = appTypography()
+    }
+
     MaterialTheme(
         colorScheme = colors,
+        typography = typography,
         content = {
-
             content()
         }
     )

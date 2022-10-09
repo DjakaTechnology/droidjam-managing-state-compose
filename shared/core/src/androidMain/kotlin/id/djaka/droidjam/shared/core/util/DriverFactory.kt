@@ -8,7 +8,7 @@ import id.djaka.droidjam.database.DroidJamDB
 import id.djaka.droidjam.shared.core.util.DriverFactory
 
 actual class DriverFactory(private val context: Context) {
-    actual fun createDriver(): SqlDriver {
+    actual suspend fun createDriver(): SqlDriver {
         return AndroidSqliteDriver(
             schema = DroidJamDB.Schema,
             context = context,
@@ -18,5 +18,5 @@ actual class DriverFactory(private val context: Context) {
 }
 
 actual fun createDBDriver(): DriverFactory {
-    return id.djaka.droidjam.shared.core.util.DriverFactory(CoreAndroidDIManager.appComponent.app)
+    return DriverFactory(CoreAndroidDIManager.appComponent.app)
 }

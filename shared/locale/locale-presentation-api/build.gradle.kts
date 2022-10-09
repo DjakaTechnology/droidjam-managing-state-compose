@@ -13,9 +13,15 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    jvm("desktop") {
+    js(IR) {
+        browser()
+        binaries.executable()
+    }
+
+
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
     }
 

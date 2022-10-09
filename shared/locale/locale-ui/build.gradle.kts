@@ -12,10 +12,15 @@ plugins {
 kotlin {
     android()
 
-    jvm("desktop") {
+    jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = DroidJam.desktopKotlinJvmTarget
+            kotlinOptions.jvmTarget = DroidJam.jvmTarget
         }
+    }
+
+    js(IR) {
+        browser()
+        binaries.executable()
     }
 
     sourceSets {
@@ -36,7 +41,6 @@ kotlin {
                 implementation(Libraries.sqlDelightCoroutines)
                 implementation(Libraries.kamelImage)
                 implementation(Libraries.ktorClientCore)
-                implementation(Libraries.coroutinesCore)
             }
         }
         val commonTest by getting {
@@ -53,12 +57,16 @@ kotlin {
             }
         }
         val androidTest by getting
-        val desktopMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
-                implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightJvmDriver)
                 implementation(Libraries.ktorClientCIO)
+            }
+        }
+        val jsMain by getting {
+            dependencies {
+                implementation(Libraries.sqlDelightJSDriver)
             }
         }
     }
@@ -71,4 +79,8 @@ android {
         minSdk = DroidJam.minSdk
         targetSdk = DroidJam.targetSdk
     }
+}
+
+compose.experimental {
+    web.application {}
 }

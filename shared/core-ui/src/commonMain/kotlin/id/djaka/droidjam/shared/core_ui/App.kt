@@ -1,4 +1,4 @@
-package id.djaka.droidjam.common
+package id.djaka.droidjam.shared.core_ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

@@ -3,7 +3,7 @@ package id.djaka.droidjam.common
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
-import id.djaka.droidjam.common.App
+import id.djaka.droidjam.shared.core_ui.App
 
 @Preview
 @Composable

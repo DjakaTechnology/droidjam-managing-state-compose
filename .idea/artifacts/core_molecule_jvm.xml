@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="core-molecule-jvm">
-    <output-path>$PROJECT_DIR$/shared/core-molecule/build/libs</output-path>
-    <root id="archive" name="core-molecule-jvm.jar">
-      <element id="module-output" name="droidjam.shared.core-molecule.jvmMain" />
-    </root>
-  </artifact>
-</component>

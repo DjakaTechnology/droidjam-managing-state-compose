@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="locale-ui-jvm">
-    <output-path>$PROJECT_DIR$/shared/locale/locale-ui/build/libs</output-path>
-    <root id="archive" name="locale-ui-jvm.jar">
-      <element id="module-output" name="droidjam.shared.locale.locale-ui.jvmMain" />
-    </root>
-  </artifact>
-</component>

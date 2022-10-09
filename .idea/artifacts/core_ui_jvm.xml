@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="core-ui-jvm">
-    <output-path>$PROJECT_DIR$/shared/core-ui/build/libs</output-path>
-    <root id="archive" name="core-ui-jvm.jar">
-      <element id="module-output" name="droidjam.shared.core-ui.jvmMain" />
-    </root>
-  </artifact>
-</component>

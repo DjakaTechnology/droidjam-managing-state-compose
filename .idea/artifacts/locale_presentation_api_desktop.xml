@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="locale-presentation-api-desktop">
-    <output-path>$PROJECT_DIR$/shared/locale/locale-presentation-api/build/libs</output-path>
-    <root id="archive" name="locale-presentation-api-desktop.jar">
-      <element id="module-output" name="droidjam.shared.locale.locale-presentation-api.desktopMain" />
-    </root>
-  </artifact>
-</component>

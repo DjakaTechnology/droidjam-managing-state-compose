@@ -60,7 +60,6 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
-                implementation("dev.icerock.moko:resources-compose:0.20.1")
                 implementation(Libraries.sqlDelightJvmDriver)
                 implementation(Libraries.ktorClientCIO)
             }

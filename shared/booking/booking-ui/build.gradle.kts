@@ -39,7 +39,6 @@ kotlin {
                 implementation(Libraries.settingsNoArgs)
                 implementation(Libraries.settingsCoroutines)
                 implementation(Libraries.sqlDelightCoroutines)
-                implementation(Libraries.kamelImage)
                 implementation(Libraries.ktorClientCore)
             }
         }

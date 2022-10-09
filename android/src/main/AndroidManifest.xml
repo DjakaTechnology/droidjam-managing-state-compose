@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="id.djaka.android">
     <application android:allowBackup="false" android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@android:style/Theme.NoTitleBar"
         android:name="id.djaka.droidjam.android.CoreApplication">
         <activity android:name="id.djaka.droidjam.android.MainActivity" android:exported="true">
             <intent-filter>

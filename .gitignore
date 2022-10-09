@@ -246,3 +246,5 @@ logs/
 *.keystore
 *cruise-output*
 web/
+
+report/

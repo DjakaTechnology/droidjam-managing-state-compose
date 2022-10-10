@@ -35,10 +35,9 @@ class CountryPickerFlowLikeRxPresenter(
 
                 if (it.query.isNotEmpty()) {
                     emit(CountryPickerRxResult.SearchStateChange(CountryPickerRxModel.CountryListState.Loading))
+
                     delay(200) // Debounce
-                    println("Result: Fetching")
                     emit(CountryPickerRxResult.SearchStateChange(filterCountry(it.query)))
-                    println("Result: updated")
                 }
             },
 

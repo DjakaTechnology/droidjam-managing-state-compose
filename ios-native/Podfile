@@ -1,0 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+use_frameworks!
+
+platform :ios, '14.1'
+
+install! 'cocoapods', :deterministic_uuids => false
+
+target 'droidjam.ios' do
+
+  # Pods for droidjam.ios
+  pod 'ios', :path => '../ios'
+#   pod 'core_iosSwift', :path => '../shared/core-ios'
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
+end

@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(project(":shared:core-app"))
     implementation(project(":shared:core"))
     implementation(project(":shared:core-ui"))
     implementation(project(":shared:locale:locale-ui"))

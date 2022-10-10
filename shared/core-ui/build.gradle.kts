@@ -31,7 +31,6 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.material3)
                 implementation(Libraries.serialization)
-                implementation(Libraries.kamelImage)
                 implementation(Libraries.ktorClientCore)
                 implementation(Libraries.coroutinesCore)
             }
@@ -47,6 +46,7 @@ kotlin {
                 implementation(Libraries.ktorClientCIO)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.material3)
+                implementation(Libraries.kamelImage)
             }
         }
         val androidTest by getting
@@ -54,6 +54,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.preview)
+                implementation(Libraries.kamelImage)
             }
         }
 
@@ -61,6 +62,7 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(Libraries.sqlDelightJSDriver)
+                implementation(Libraries.kamelImageJs)
             }
         }
     }
@@ -76,5 +78,9 @@ android {
     defaultConfig {
         minSdk = DroidJam.minSdk
         targetSdk = DroidJam.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

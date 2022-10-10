@@ -3,8 +3,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
     id(BuildPlugins.sqlDelight)
+    id(BuildPlugins.jetbrainCompose)
 }
 
 group = "id.djaka"
@@ -16,14 +16,17 @@ kotlin {
         browser()
         binaries.executable()
     }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":shared:core-app"))
                 implementation(project(":shared:core"))
                 implementation(project(":shared:core-ui"))
                 implementation(project(":shared:locale:locale-presentation-api"))
                 implementation(project(":shared:locale:locale-ui"))
-                implementation(project(":shared:locale:locale-app"))
+                implementation(project(":shared:booking:booking-presentation-api"))
+                implementation(project(":shared:booking:booking-ui"))
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material)
@@ -35,6 +38,7 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(Libraries.sqlDelightJSDriver)
+                implementation(Libraries.kamelImageJs)
                 implementation(npm("sql.js", "1.7.0"))
 
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))

@@ -3,20 +3,20 @@ package id.djaka.droidjam.shared.locale.app.di
 import id.djaka.droidjam.shared.core.di.CoreComponent
 import id.djaka.droidjam.shared.core.di.CoreDIManager
 import id.djaka.droidjam.shared.core.framework.Presenter
-import id.djaka.droidjam.shared.locale.app.domain.CountryCodeRepository
+import id.djaka.droidjam.shared.locale.app.repository.CountryCodeRepository
 import id.djaka.droidjam.shared.locale.app.domain.CountryPickerConverter
 import id.djaka.droidjam.shared.locale.app.domain.GetSearchCountryPickerInitialStateUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryCodeFilterUseCase
 import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
-import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerPresenter
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerPresenterImpl
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerFlowLikeRxPresenter
 import id.djaka.droidjam.shared.locale.app.presenter.country_picker.variant.CountryPickerFlowPresenter
 import id.djaka.droidjam.shared.locale.presentation.api.LocalePresenterProvider
 import id.djaka.droidjam.shared.locale.presentation.api.di.LocalePresentationApiDIManager
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
-import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker_rx.CountryPickerRxModel
+import id.djaka.droidjam.shared.locale.presentation.api.presenter.CountryPickerPresenter
 
 object LocaleDIManager {
     val api = LocalePresentationApiDIManager
@@ -78,15 +78,15 @@ class LocaleSubComponent(
 class LocalePresenterProviderImpl(
     private val localeDIManager: LocaleDIManager,
 ) : LocalePresenterProvider {
-    override fun provideCountryPickerPresenter(): Presenter<CountryPickerEvent, CountryPickerModel> {
+    override fun provideCountryPickerPresenter(): CountryPickerPresenter {
         val component = localeDIManager.subComponent()
-        return CountryPickerPresenter(
+        return CountryPickerPresenterImpl(
             searchCountryUseCases = component.searchCountryUseCase,
             saveRecentCountryUseCase = component.saveRecentCountryUseCase
         )
     }
 
-    override fun provideCountryPickerPresenterFlow(): Presenter<CountryPickerEvent, CountryPickerModel> {
+    override fun provideCountryPickerPresenterFlow(): CountryPickerPresenter {
         val component = localeDIManager.subComponent()
         return CountryPickerFlowPresenter(
             searchCountryUseCases = component.searchCountryUseCase,

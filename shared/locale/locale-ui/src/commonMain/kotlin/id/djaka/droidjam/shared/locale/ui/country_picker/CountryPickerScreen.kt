@@ -45,13 +45,11 @@ import id.djaka.droidjam.shared.core_ui.theme.SpacingM
 import id.djaka.droidjam.shared.core_ui.theme.SpacingML
 import id.djaka.droidjam.shared.core_ui.theme.SpacingS
 import id.djaka.droidjam.shared.core_ui.theme.appSurfaceColorAtElevation
+import id.djaka.droidjam.shared.core_ui.util.ImageLoader
 import id.djaka.droidjam.shared.locale.presentation.api.model.CountryCodeModel
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.item.CountryPickerItem
-import io.kamel.image.KamelImage
-import io.kamel.image.lazyPainterResource
-import io.ktor.http.Url
 
 @Composable
 fun CountryPickerScreen(
@@ -197,10 +195,9 @@ private fun CountryItem(
 @Composable
 private fun CountryFlag(item: CountryPickerItem.Picker) {
     if (getPlatform().platformType == PlatformType.DESKTOP) {
-        KamelImage(
-            resource = lazyPainterResource(data = Url(item.item.image)),
-            contentDescription = "flag",
+        ImageLoader(
             modifier = Modifier.size(24.dp),
+            string = item.item.image,
             onLoading = {
                 CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
             },

@@ -1,3 +1,5 @@
+import org.jetbrains.compose.compose
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -55,6 +57,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Libraries.sqlDelightAndroidDriver)
+                implementation(compose.runtime)
             }
         }
         val androidTest by getting
@@ -85,12 +88,14 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(Libraries.sqlDelightJvmDriver)
+                implementation(compose.runtime)
             }
         }
 
         val jsMain by getting {
             dependencies {
                 implementation(Libraries.sqlDelightJSDriver)
+                implementation(compose.runtime)
             }
         }
     }

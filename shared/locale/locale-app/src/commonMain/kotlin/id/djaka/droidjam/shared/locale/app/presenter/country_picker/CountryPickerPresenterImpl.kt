@@ -51,29 +51,23 @@ class CountryPickerPresenterImpl(
 
     @Composable
     private fun presentCountryListState(query: String): CountryPickerModel.CountryListState {
-        val initialState by remember { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() }.collectAsState(listOf())
-        var result: CountryPickerModel.CountryListState by remember { mutableStateOf(CountryPickerModel.CountryListState.Loading) }
-
         if (query.isEmpty()) {
-            LaunchedEffect(initialState) {
-                result = if (initialState.isEmpty()) {
-                    CountryPickerModel.CountryListState.Loading
-                } else {
-                    CountryPickerModel.CountryListState.Success(initialState)
-                }
+            val initialState by remember { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() }.collectAsState(listOf())
+            return if (initialState.isEmpty()) {
+                CountryPickerModel.CountryListState.Loading
+            } else {
+                CountryPickerModel.CountryListState.Success(initialState)
             }
         } else {
+            var result: CountryPickerModel.CountryListState by remember { mutableStateOf(CountryPickerModel.CountryListState.Loading) }
             LaunchedEffect(query) {
                 result = CountryPickerModel.CountryListState.Loading
-                println("Result: Reset Debounce")
                 delay(200)
-                println("Result: Fetching")
-                result = filterCountry(query)
-                println("Result updated")
-            }
-        }
 
-        return result
+                result = filterCountry(query)
+            }
+            return result
+        }
     }
 
     private suspend fun filterCountry(query: String): CountryPickerModel.CountryListState {

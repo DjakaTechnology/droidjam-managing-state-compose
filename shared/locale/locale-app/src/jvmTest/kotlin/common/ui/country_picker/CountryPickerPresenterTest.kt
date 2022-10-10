@@ -12,11 +12,11 @@ import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.Cou
 import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.yield
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -105,6 +105,7 @@ class CountryPickerPresenterTest {
         events.emit(CountryPickerEvent.SearchBoxChanged(expectedQuery))
 
         // Then
+        testDispatcher.scheduler.advanceUntilIdle()
         val lastState = turbine.expectMostRecentItem()
         val expectedState = CountryPickerModel.CountryListState.Success(
             expectedItems

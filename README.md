@@ -1,6 +1,9 @@
 # droidjam-managing-state-compose
 Managing State with Jetpack compose
 
+Pre multimodule one can be explored from this commit
+https://github.com/DjakaTechnology/droidjam-managing-state-compose/tree/2457e1e632ee02a19eb82085305dc728b421e2b6
+
 ## Tech Stack
 ```
 - UI        : Compose UI, Swift UI, Compose Material 3

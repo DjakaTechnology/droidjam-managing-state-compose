@@ -78,6 +78,14 @@ kotlin {
                 implementation(Libraries.sqlDelightJSDriver)
             }
         }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(TestLibraries.mockk)
+                implementation(TestLibraries.turbine)
+                implementation(TestLibraries.coroutines)
+            }
+        }
     }
 }
 

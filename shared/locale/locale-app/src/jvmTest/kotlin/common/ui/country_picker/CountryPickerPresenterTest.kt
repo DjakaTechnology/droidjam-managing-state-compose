@@ -1,17 +1,22 @@
-package id.djaka.droidjam.common.ui.country_picker
+package common.ui.country_picker
 
 import app.cash.molecule.RecompositionClock
 import app.cash.molecule.moleculeFlow
 import app.cash.turbine.testIn
-import id.djaka.droidjam.common.framework.CoreObjectMocker
-import id.djaka.droidjam.common.domain.SaveRecentCountryUseCase
-import id.djaka.droidjam.common.domain.SearchCountryUseCases
+import common.framework.CoreObjectMocker
+import common.framework.mockCoroutineDispatcher
+import id.djaka.droidjam.shared.locale.app.domain.SaveRecentCountryUseCase
+import id.djaka.droidjam.shared.locale.app.domain.SearchCountryUseCases
+import id.djaka.droidjam.shared.locale.app.presenter.country_picker.CountryPickerPresenterImpl
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerEvent
+import id.djaka.droidjam.shared.locale.presentation.api.model.country_picker.CountryPickerModel
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.yield
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -19,18 +24,21 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CountryPickerPresenterTest {
-    private lateinit var presenter: CountryPickerPresenter
-    private lateinit var events: MutableSharedFlow<CountryPickerPresenter.Event>
+    private lateinit var presenter: CountryPickerPresenterImpl
+    private lateinit var events: MutableSharedFlow<CountryPickerEvent>
 
-    private val searchCountryUseCases: SearchCountryUseCases = mockk()
-    private val saveRecentCountryUseCase: SaveRecentCountryUseCase = mockk()
-
+    private lateinit var searchCountryUseCases: SearchCountryUseCases
+    private lateinit var saveRecentCountryUseCase: SaveRecentCountryUseCase
     private val testDispatcher = UnconfinedTestDispatcher()
-
     @Before
     fun setup() {
-        presenter = CountryPickerPresenter(searchCountryUseCases, saveRecentCountryUseCase)
+        mockCoroutineDispatcher(testDispatcher)
+
         events = MutableSharedFlow()
+        searchCountryUseCases = CoreObjectMocker.mockSearchCountryUseCases()
+        saveRecentCountryUseCase = CoreObjectMocker.mockSaveRecentCountryUseCase()
+
+        presenter = CountryPickerPresenterImpl(searchCountryUseCases, saveRecentCountryUseCase)
     }
 
     @After
@@ -53,10 +61,11 @@ class CountryPickerPresenterTest {
 
         // Then
         val lastState = turbine.expectMostRecentItem()
-        val expectedState = CountryPickerPresenter.Model.CountryListState.Success(
+        val expectedState = CountryPickerModel.CountryListState.Success(
             expectedInitialState
         )
         assertEquals(expectedState, lastState.countryListState)
+
         turbine.cancel()
     }
 
@@ -64,8 +73,6 @@ class CountryPickerPresenterTest {
     @Test
     fun `should change query when query changed`() = runTest {
         // Setup
-        every { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() } returns flowOf(listOf())
-        coEvery { searchCountryUseCases.searchCountryCodeFilter(any()) } returns listOf()
 
         val turbine = moleculeFlow(RecompositionClock.Immediate) { presenter.present(events) }.testIn(this)
         turbine.expectMostRecentItem()
@@ -74,7 +81,7 @@ class CountryPickerPresenterTest {
         val expectedQuery = "query"
 
         // When
-        events.emit(CountryPickerPresenter.Event.SearchBoxChanged(expectedQuery))
+        events.emit(CountryPickerEvent.SearchBoxChanged(expectedQuery))
 
         // Then
         val lastState = turbine.expectMostRecentItem()
@@ -86,7 +93,6 @@ class CountryPickerPresenterTest {
     @Test
     fun `should set country codes with filtered result when query changed`() = runTest {
         // Setup
-        every { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() } returns flowOf(listOf())
         val turbine = moleculeFlow(RecompositionClock.Immediate) { presenter.present(events) }.testIn(this)
         turbine.expectMostRecentItem()
 
@@ -96,11 +102,11 @@ class CountryPickerPresenterTest {
         coEvery { searchCountryUseCases.searchCountryCodeFilter(expectedQuery) } returns expectedItems
 
         // When
-        events.emit(CountryPickerPresenter.Event.SearchBoxChanged(expectedQuery))
+        events.emit(CountryPickerEvent.SearchBoxChanged(expectedQuery))
 
         // Then
         val lastState = turbine.expectMostRecentItem()
-        val expectedState = CountryPickerPresenter.Model.CountryListState.Success(
+        val expectedState = CountryPickerModel.CountryListState.Success(
             expectedItems
         )
         assertEquals(expectedState, lastState.countryListState)
@@ -122,7 +128,7 @@ class CountryPickerPresenterTest {
         val expectedSelectedCountry = CoreObjectMocker.mockCountryCodeModel()
 
         // When
-        events.emit(CountryPickerPresenter.Event.ItemClicked(expectedSelectedCountry))
+        events.emit(CountryPickerEvent.ItemClicked(expectedSelectedCountry))
 
         // Then
         val lastState = turbine.expectMostRecentItem()
@@ -134,7 +140,6 @@ class CountryPickerPresenterTest {
     @Test
     fun `should save selected country to recent item when item clicked`() = runTest {
         // Setup
-        every { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() } returns flowOf(listOf())
         every { saveRecentCountryUseCase(any()) } just runs
 
         val turbine = moleculeFlow(RecompositionClock.Immediate) { presenter.present(events) }.testIn(this)
@@ -144,7 +149,7 @@ class CountryPickerPresenterTest {
         val expectedSelectedCountry = CoreObjectMocker.mockCountryCodeModel()
 
         // When
-        events.emit(CountryPickerPresenter.Event.ItemClicked(expectedSelectedCountry))
+        events.emit(CountryPickerEvent.ItemClicked(expectedSelectedCountry))
 
         // Then
         turbine.expectMostRecentItem()

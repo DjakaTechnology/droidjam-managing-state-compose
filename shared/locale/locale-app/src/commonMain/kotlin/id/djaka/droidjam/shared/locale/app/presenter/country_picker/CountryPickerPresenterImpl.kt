@@ -22,8 +22,6 @@ class CountryPickerPresenterImpl(
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
 ) : CountryPickerPresenter, MoleculePresenter<CountryPickerEvent, CountryPickerModel> {
 
-    private val initialStateFlow = searchCountryUseCases.getSearchCountryCodeInitialStateFlow()
-
     @Composable
     override fun present(event: Flow<CountryPickerEvent>): CountryPickerModel {
         var searchBox by remember { mutableStateOf("") }
@@ -53,7 +51,7 @@ class CountryPickerPresenterImpl(
 
     @Composable
     private fun presentCountryListState(query: String): CountryPickerModel.CountryListState {
-        val initialState by initialStateFlow.collectAsState(listOf())
+        val initialState by remember { searchCountryUseCases.getSearchCountryCodeInitialStateFlow() }.collectAsState(listOf())
         var result: CountryPickerModel.CountryListState by remember { mutableStateOf(CountryPickerModel.CountryListState.Loading) }
 
         if (query.isEmpty()) {

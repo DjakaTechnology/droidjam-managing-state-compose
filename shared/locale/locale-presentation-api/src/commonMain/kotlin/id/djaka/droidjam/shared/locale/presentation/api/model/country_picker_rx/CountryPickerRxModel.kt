@@ -8,7 +8,6 @@ data class CountryPickerRxModel(
     val searchBox: String,
     val countryListState: CountryListState,
     val selectedCountry: CountryCodeModel? = null,
-    val initialList: CountryListState
 ) {
     sealed class CountryListState {
         object Loading : CountryListState()
@@ -21,7 +20,6 @@ data class CountryPickerRxModel(
             searchBox = "",
             countryListState = CountryListState.Loading,
             selectedCountry = null,
-            initialList = CountryListState.Loading
         )
     }
 }

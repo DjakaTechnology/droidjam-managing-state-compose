@@ -5,6 +5,7 @@ import androidx.compose.ui.window.application
 import id.djaka.droidjam.common.CoreApp
 import id.djaka.droidjam.shared.booking.ui.BookingScreen
 import id.djaka.droidjam.shared.core_ui.App
+import id.djaka.droidjam.shared.locale.ui.country_picker.CountryPickerScreen
 
 
 fun main() = application {
@@ -19,8 +20,8 @@ fun main() = application {
 
         if (isInitialized) {
             App {
-//                CountryPickerScreen()
-                BookingScreen()
+                CountryPickerScreen()
+//                BookingScreen()
             }
         }
     }

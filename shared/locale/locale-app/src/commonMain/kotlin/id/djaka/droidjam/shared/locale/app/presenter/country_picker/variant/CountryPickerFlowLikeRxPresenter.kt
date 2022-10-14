@@ -14,67 +14,48 @@ import kotlinx.coroutines.flow.*
 class CountryPickerFlowLikeRxPresenter(
     private val searchCountryUseCases: SearchCountryUseCases,
     private val saveRecentCountryUseCase: SaveRecentCountryUseCase,
-): Presenter<CountryPickerEvent, CountryPickerRxModel> {
+) : Presenter<CountryPickerEvent, CountryPickerRxModel> {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun present(
         coroutineScope: CoroutineScope,
         event: Flow<CountryPickerEvent>,
     ): StateFlow<CountryPickerRxModel> {
-        return merge(
-            searchCountryUseCases.getSearchCountryCodeInitialStateFlow().onStart { emit(listOf()) }
-                .transform { initialState ->
+        return merge<CountryPickerRxResult>(
+            combine(
+                searchCountryUseCases.getSearchCountryCodeInitialStateFlow().onStart { emit(listOf()) },
+                event.filterIsInstance<CountryPickerEvent.SearchBoxChanged>().onStart { emit(CountryPickerEvent.SearchBoxChanged("")) },
+                ::Pair
+            ).filter { it.second.query.isEmpty() }
+                .map { (initialState, event) ->
                     if (initialState.isEmpty()) {
-                        emit(CountryPickerRxResult.InitialStateLoad(CountryPickerRxModel.CountryListState.Loading))
+                        CountryPickerRxResult.SearchStateChange(event.query, CountryPickerRxModel.CountryListState.Loading)
                     } else {
-                        emit(CountryPickerRxResult.InitialStateLoad(CountryPickerRxModel.CountryListState.Success(initialState)))
+                        CountryPickerRxResult.SearchStateChange(event.query, CountryPickerRxModel.CountryListState.Success(initialState))
                     }
                 },
 
             event.filterIsInstance<CountryPickerEvent.SearchBoxChanged>().transformLatest {
-                emit(CountryPickerRxResult.SearchBoxQueryChange(it.query))
+                if (it.query.isEmpty()) return@transformLatest
 
-                if (it.query.isNotEmpty()) {
-                    emit(CountryPickerRxResult.SearchStateChange(CountryPickerRxModel.CountryListState.Loading))
+                emit(CountryPickerRxResult.SearchStateChange(it.query, CountryPickerRxModel.CountryListState.Loading))
 
-                    delay(200) // Debounce
-                    emit(CountryPickerRxResult.SearchStateChange(filterCountry(it.query)))
-                }
+                delay(200) // Debounce
+                emit(CountryPickerRxResult.SearchStateChange(it.query, filterCountry(it.query)))
             },
 
             event.filterIsInstance<CountryPickerEvent.ItemClicked>()
                 .onEach { saveRecentCountryUseCase(it.item.code) }
                 .transform {
                     emit(CountryPickerRxResult.SelectCountry(it.item))
-                    emit(CountryPickerRxResult.SearchBoxQueryChange(""))
                 },
 
             ).scan(CountryPickerRxModel.empty()) { state, result ->
 
             when (result) {
                 is CountryPickerRxResult.SelectCountry -> state.copy(selectedCountry = result.countryCodeModel)
-                is CountryPickerRxResult.SearchBoxQueryChange -> {
-                    if (result.query.isEmpty()) {
-                        state.copy(searchBox = result.query, countryListState = state.initialList)
-                    } else {
-                        state.copy(searchBox = result.query)
-                    }
-                }
 
                 is CountryPickerRxResult.SearchStateChange -> {
-                    if (state.searchBox.isNotEmpty()) {
-                        state.copy(countryListState = result.state)
-                    } else state
-                }
-
-                is CountryPickerRxResult.InitialStateLoad -> {
-                    if (state.searchBox.isEmpty()) {
-                        state.copy(
-                            countryListState = result.state,
-                            initialList = result.state
-                        )
-                    } else {
-                        state.copy(initialList = result.state)
-                    }
+                    state.copy(result.query, result.state)
                 }
             }
         }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(5000), CountryPickerRxModel.empty())
@@ -88,8 +69,6 @@ class CountryPickerFlowLikeRxPresenter(
             CountryPickerRxModel.CountryListState.Success(filterResult)
         }
     }
-
-
 
 
 }

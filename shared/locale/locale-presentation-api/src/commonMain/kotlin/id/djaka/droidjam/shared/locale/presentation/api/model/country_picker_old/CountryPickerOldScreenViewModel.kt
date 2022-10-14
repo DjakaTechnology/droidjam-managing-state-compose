@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
 class CountryPickerOldScreenViewModel {
-    val initialState = MutableStateFlow(listOf<CountryPickerItem>())
+    val initialState = MutableStateFlow(listOf<CountryPickerItem>()) // !!
 
     val query = MutableStateFlow("")
 
-    val filteredCountryCodeList = MutableStateFlow(listOf<CountryPickerItem>())
+    val result = MutableStateFlow(listOf<CountryPickerItem>())
 
     val selectedCountry = MutableStateFlow<CountryCodeModel?>(null)
 

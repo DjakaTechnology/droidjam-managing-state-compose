@@ -20,23 +20,31 @@ class CountryPickerPresenter constructor(
         initInitialState()
     }
 
-    private fun initInitialState() {
-        coroutineScope.launch {
-            viewModel.isLoading.value = true
+    private fun initInitialState() = coroutineScope.launch {
+        viewModel.isLoading.value = true
 
-            searchCountryUseCases.getSearchCountryCodeInitialStateFlow().collect {
-                viewModel.initialState.value = it
-                viewModel.filteredCountryCodeList.value = viewModel.initialState.value
+        searchCountryUseCases.getSearchCountryCodeInitialStateFlow().collect {
+            viewModel.initialState.value = it
+            viewModel.result.value = viewModel.initialState.value
 
-                viewModel.isLoading.value = false // Might cause race condition bug
-            }
+            viewModel.isLoading.value = false // !!
         }
     }
 
     override fun onSearchBoxChanged(query: String) {
         viewModel.query.value = query
 
-        loadSearch(query)
+        coroutineScope.launch {
+            viewModel.isLoading.value = true
+
+            if (query.isEmpty()) {
+                viewModel.result.value = viewModel.initialState.value
+            } else {
+                viewModel.result.value = searchCountryUseCases.searchCountryCodeFilter(query)
+            }
+
+            viewModel.isLoading.value = false // !!
+        }
     }
 
     var searchJob: Job? = null
@@ -46,9 +54,9 @@ class CountryPickerPresenter constructor(
             viewModel.isLoading.value = true
 
             if (query.isEmpty()) {
-                viewModel.filteredCountryCodeList.value = viewModel.initialState.value
+                viewModel.result.value = viewModel.initialState.value
             } else {
-                viewModel.filteredCountryCodeList.value = searchCountryUseCases.searchCountryCodeFilter(query)
+                viewModel.result.value = searchCountryUseCases.searchCountryCodeFilter(query)
             }
 
             viewModel.isLoading.value = false

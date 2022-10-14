@@ -23,6 +23,6 @@ fun CountryPickerScreenOld(state: CountryPickerOldScreenViewModel, action: Count
         onValueChange = { action.onSearchBoxChanged(it) }
     )
 
-    val result by state.filteredCountryCodeList.collectAsState()
+    val result by state.result.collectAsState()
     /*...*/
 }

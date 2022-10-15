@@ -36,3 +36,6 @@ https://github.com/DjakaTechnology/droidjam-managing-state-compose/tree/2457e1e6
 
 https://user-images.githubusercontent.com/19620593/194906030-e56d525c-2ac3-44e6-8585-4cbe739dd7ae.mp4
 
+
+# Deck
+https://drive.google.com/file/d/1kTGvK43AV-N2YBXPo1H-Itz8btRRWVz9/view?usp=drivesdk
